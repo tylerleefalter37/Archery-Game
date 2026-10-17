@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>The Timberline Cache: Traditional Treestand Bowhunting & Ancient Artifacts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    * {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background-color: #12100d;
+      color: #dfd7cc;
+      padding-top: max(8px, var(--safe-top));
+      padding-bottom: max(16px, var(--safe-bottom));
+      padding-left: max(8px, var(--safe-left));
+      padding-right: max(8px, var(--safe-right));
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-x: hidden;
+      word-break: break-word;
+    }
+
+    .font-title { font-family: 'Cinzel', serif; }
+    .font-mono-ledger { font-family: 'Courier Prime', monospace; }
+
+    /* Frontier Cabin & Timber Visual Styles */
+    .cabin-panel {
+      background: linear-gradient(170deg, #1f1b16 0%, #15120f 100%);
+      border: 1px solid #45392e;
+      box-shadow: inset 0 0 16px rgba(0,0,0,0.8), 0 4px 14px rgba(0,0,0,0.9);
+    }
+
+    .cabin-inset {
+      background: #0f0d0a;
+      border: 1px solid #2d241c;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.85);
+    }
+
+    .pedestal-slot {
+      background: linear-gradient(180deg, #1d1711 0%, #110e0b 100%);
+      border: 1px solid #4a3b2b;
+      transition: all 0.2s ease-in-out;
+    }
+    .pedestal-slot.active-pedestal {
+      border-color: #d4a359;
+      box-shadow: 0 0 10px rgba(212, 163, 89, 0.25);
+    }
+
+    .parchment-card {
+      background-color: #cfbe9f;
+      background-image: radial-gradient(#bba783 15%, transparent 16%);
+      background-size: 8px 8px;
+      color: #271f16;
+      border: 2px solid #544332;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    }
+
+    .scroll-ios {
+      -webkit-overflow-scrolling: touch;
+      overflow-y: auto;
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      background: #2b231a;
+      height: 8px;
+      border-radius: 4px;
+      border: 1px solid #544433;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background: #d4a359;
+      cursor: pointer;
+      border: 2px solid #1a140e;
+      box-shadow: 0 0 6px #000;
+    }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #12100d; }
+    ::-webkit-scrollbar-thumb { background: #4a3c2e; border-radius: 2px; }
+  </style>
+</head>
+<body class="flex flex-col text-sm selection:bg-amber-950 selection:text-amber-200">
+
+  <!-- ================= TOP HUD: FRONTIER EXPEDITION LEDGER ================= -->
+  <header class="w-full max-w-6xl mx-auto cabin-panel rounded-lg p-3 mb-2.5 border border-[#524335]">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+      
+      <!-- Insignia & Woodsman Details -->
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="w-12 h-12 rounded-full border-2 border-[#d4a359] bg-[#2a2218] flex items-center justify-center text-xl shadow-inner shrink-0 text-amber-300">
+          🏹
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-base sm:text-lg font-bold font-title tracking-wider text-[#d4a359] leading-tight">The Timberline Cache</h1>
+            <span id="rank-badge" class="px-2 py-0.5 text-[10px] font-title uppercase rounded bg-[#2b2116] text-amber-300 border border-[#785b37] font-bold">Cedar Ridge Scout</span>
+          </div>
+          <p class="text-xs text-[#a89988] italic">Elevated Treestand Traditional Archery & Antiquities Trade</p>
+        </div>
+      </div>
+
+      <!-- Frontier Dollars, Stand Height & Rut Season Status -->
+      <div class="flex items-center justify-between sm:justify-end gap-2 md:gap-4 w-full sm:w-auto flex-wrap text-xs font-title">
+        <div class="flex items-center gap-1.5 cabin-inset px-2.5 py-1.5 rounded">
+          <span class="text-[#8a7b6a]">Season:</span>
+          <span id="stat-season-day" class="text-amber-200 font-bold">November Rut (Day 1)</span>
+        </div>
+
+        <div class="flex items-center gap-1.5 cabin-inset px-2.5 py-1.5 rounded">
+          <span class="text-[#d4a359] font-bold">💵 Cash:</span>
+          <span id="stat-dollars" class="text-emerald-400 font-bold font-mono-ledger text-sm">$420</span>
+        </div>
+
+        <div class="flex items-center gap-1.5 cabin-inset px-2.5 py-1.5 rounded">
+          <span class="text-amber-300 font-bold">Stand:</span>
+          <span id="stat-stand-height" class="text-amber-200">20 ft Oak</span>
+        </div>
+
+        <div class="flex items-center gap-1.5 cabin-inset px-2.5 py-1.5 rounded">
+          <span class="text-sky-300 font-bold">Wind:</span>
+          <span id="stat-wind-vector" class="text-sky-200">4 mph Down-Ridge</span>
+        </div>
+      </div>
+
+      <!-- Global Actions -->
+      <div class="flex items-center gap-1.5 w-full sm:w-auto justify-end">
+        <button onclick="advanceRutDay()" class="px-3 py-1.5 text-xs rounded border border-[#d4a359] bg-gradient-to-r from-[#3e2e1d] to-[#1c140d] text-amber-200 font-title font-bold hover:brightness-110">
+          Next Hunt Dawn ➔
+        </button>
+        <button onclick="toggleModal('god-modal')" class="px-2 py-1.5 text-xs rounded border border-amber-800 bg-[#281a10] text-amber-300 font-title font-bold">
+          ⚡ Great Spirit
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= NAVIGATION TABS ================= -->
+  <nav class="w-full max-w-6xl mx-auto flex gap-1 mb-2.5 overflow-x-auto pb-1 scroll-ios font-title text-xs">
+    <button onclick="switchTab('treestand')" id="tab-treestand" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b-0 border-[#d4a359] text-amber-300 font-bold whitespace-nowrap">
+      🏹 Treestand Perch
+    </button>
+    <button onclick="switchTab('scouting')" id="tab-scouting" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b border-[#3c3125] text-[#8a7b6a] hover:text-amber-300 whitespace-nowrap">
+      🔎 Creek Bed Scouting (<span id="relic-finds-badge">0 Found</span>)
+    </button>
+    <button onclick="switchTab('fielddress')" id="tab-fielddress" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b border-[#3c3125] text-[#8a7b6a] hover:text-amber-300 whitespace-nowrap">
+      🥩 Buck Pole & Dressing (<span id="quarry-count-badge">0</span>)
+    </button>
+    <button onclick="switchTab('auction')" id="tab-auction" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b border-[#3c3125] text-[#8a7b6a] hover:text-amber-300 whitespace-nowrap">
+      🏛 Frontier Trading Post Auction
+    </button>
+    <button onclick="switchTab('bargains')" id="tab-bargains" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b border-[#3c3125] text-[#8a7b6a] hover:text-amber-300 whitespace-nowrap">
+      🛶 River Cache Bargains <span class="text-[9px] bg-red-950 text-red-200 px-1 rounded border border-red-800">1-5%</span>
+    </button>
+    <button onclick="switchTab('bowyer')" id="tab-bowyer" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b border-[#3c3125] text-[#8a7b6a] hover:text-amber-300 whitespace-nowrap">
+      🛠 Bowyer's Workbench
+    </button>
+    <button onclick="switchTab('ledger')" id="tab-ledger" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b border-[#3c3125] text-[#8a7b6a] hover:text-amber-300 whitespace-nowrap">
+      📜 Woodsman's Chronicle
+    </button>
+    <button onclick="switchTab('manual')" id="tab-manual" class="tab-btn px-3 py-2 rounded-t cabin-panel border-b border-[#3c3125] text-[#8a7b6a] hover:text-amber-300 whitespace-nowrap">
+      📖 Ballistics Codex
+    </button>
+  </nav>
+
+  <!-- ================= MAIN VIEW CONTAINERS ================= -->
+  <main class="w-full max-w-6xl mx-auto flex-1 flex flex-col min-h-0">
+
+    <!-- TAB 1: TREESTAND PERCH & SIDE BALLISTIC TRAJECTORY -->
+    <section id="view-treestand" class="tab-content flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3 min-h-0">
+      
+      <!-- Sighting Lanes & Rut Encounters Roster -->
+      <div class="lg:col-span-4 cabin-panel rounded-lg p-3 flex flex-col justify-between max-h-[640px]">
+        <div>
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#3d3126]">
+            <h2 class="font-title font-bold text-amber-200 text-sm flex items-center gap-1.5">
+              <span>🦌</span> Whitetail & Game in the Draws
+            </h2>
+            <span id="encounter-count" class="text-xs text-[#8a7b6a]">Cruising</span>
+          </div>
+          <div id="encounter-list" class="space-y-2 overflow-y-auto max-h-[380px] sm:max-h-[440px] pr-1 scroll-ios"></div>
+        </div>
+
+        <div class="pt-2 border-t border-[#3d3126] flex gap-2">
+          <button onclick="rattleAntlers()" class="flex-1 py-1.5 rounded bg-[#2a1d13] border border-[#6b4c2b] text-amber-300 font-title text-xs hover:brightness-110">
+            🦌 Rattle Tines
+          </button>
+          <button onclick="gruntTubeCall()" class="flex-1 py-1.5 rounded bg-[#2a1d13] border border-[#6b4c2b] text-amber-300 font-title text-xs hover:brightness-110">
+            📯 Buck Grunt
+          </button>
+        </div>
+      </div>
+
+      <!-- Elevated Canvas & Downward Trajectory Mechanics -->
+      <div class="lg:col-span-8 cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between">
+        
+        <!-- Target Profile Banner -->
+        <div id="active-target-brief" class="cabin-inset p-2.5 rounded mb-2.5 border border-[#3d3126]"></div>
+
+        <!-- Trajectory Canvas (Treestand on Left, Deer Profile on Right) -->
+        <div class="relative w-full h-44 sm:h-56 bg-[#0a0c09] border border-[#44382c] rounded overflow-hidden mb-2.5">
+          <canvas id="trajectory-canvas" class="w-full h-full block"></canvas>
+          <div id="canvas-status-banner" class="absolute top-2 left-3 text-[11px] font-title text-amber-300 bg-black/75 px-2 py-0.5 rounded border border-[#5a4835]">
+            STAND PERCH: 20 FT ELEVATED • SIDE-PROFILE ARC
+          </div>
+          <div id="hit-feedback-indicator" class="absolute bottom-2 right-3 text-xs font-title text-emerald-400 bg-black/80 px-2 py-0.5 rounded border border-emerald-700 hidden">
+            DOUBLE LUNG PASS-THROUGH
+          </div>
+        </div>
+
+        <!-- Trajectory Sliders: Aim Elevation Angle & Draw Release Window -->
+        <div class="cabin-inset p-2.5 rounded mb-2.5 border border-[#3d3126] space-y-2.5">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-title text-amber-300 font-bold uppercase tracking-wider">Traditional Cant & Trajectory Arc Setup:</span>
+            <span id="rig-specs-tag" class="text-[11px] text-[#a89988]">Osage Self-Bow • 55# @ 28" • 540gr Cedar</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-[#bba996] font-title">Downward Aim Hold-Under:</span>
+                <span id="val-hold-angle" class="text-amber-300 font-bold">14.5° Down</span>
+              </div>
+              <input type="range" id="slider-aim-angle" min="20" max="320" value="145" class="w-full" oninput="updateBallisticPhysics()">
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-[#bba996] font-title">Shooting Lane Window:</span>
+                <span id="val-lane-display" class="text-amber-300 font-bold">Lane B (22 yds)</span>
+              </div>
+              <input type="range" id="slider-lane-window" min="1" max="3" step="1" value="2" class="w-full" oninput="changeLane(this.value)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Ballistic Telemetry & Dynamic Calculations -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs cabin-inset p-2 rounded border border-[#31261d] mb-2.5">
+          <div>
+            <span class="block text-[#7b6b5a] uppercase text-[9px]">Line-of-Sight Distance</span>
+            <span id="tele-los" class="font-bold text-amber-200">23.2 yds</span>
+          </div>
+          <div>
+            <span class="block text-[#7b6b5a] uppercase text-[9px]">True Gravity Distance</span>
+            <span id="tele-gravity-yds" class="font-bold text-emerald-400">21.8 yds</span>
+          </div>
+          <div>
+            <span class="block text-[#7b6b5a] uppercase text-[9px]">Arrow Impact KE</span>
+            <span id="tele-kinetic" class="font-bold text-amber-300">46.8 ft-lbs</span>
+          </div>
+          <div>
+            <span class="block text-[#7b6b5a] uppercase text-[9px]">Impact Trajectory Zone</span>
+            <span id="tele-zone-tag" class="font-bold text-emerald-400">VITALS (DOUBLE LUNG)</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between gap-2">
+          <p class="text-xs text-[#8a7b6a] italic truncate">
+            Current Point: <span id="current-point-label" class="text-amber-300 font-bold">2-Blade Cut-on-Contact Broadhead</span>
+          </p>
+          <button id="btn-release-arrow" onclick="releaseArrowTrajectory()" class="px-5 py-2.5 rounded bg-gradient-to-r from-[#442c17] via-[#654320] to-[#2e1d0f] border border-amber-600 hover:border-amber-400 text-amber-100 font-title font-bold tracking-wider text-xs sm:text-sm shadow-xl active:scale-95 transition shrink-0">
+            RELEASE ARROW (LOOSE)
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TAB 2: CREEK BED SCOUTING & ANCIENT ARTIFACT FINDS -->
+    <section id="view-scouting" class="tab-content hidden flex-1 cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex flex-wrap items-center justify-between pb-2.5 mb-3 border-b border-[#3d3126] gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="font-title font-bold text-base sm:text-lg text-amber-200">Prehistoric Terraces & Gravel Bed Scouting</h2>
+              <span class="bg-[#2d2115] text-amber-300 text-[10px] px-2 py-0.5 rounded border border-[#6d5130] font-bold">ANCIENT HORIZON</span>
+            </div>
+            <p class="text-xs text-[#8a7b6a]">Scout glacial outwashes, creek crossings, and uprooted ancient blowdown roots between dawn hunts.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="scoutLocation('creek')" class="px-3 py-1.5 rounded border border-amber-700 bg-[#2b1f14] text-amber-200 text-xs font-title font-bold hover:brightness-110">
+              🔎 Probe Limestone Creek Bar
+            </button>
+            <button onclick="scoutLocation('roots')" class="px-3 py-1.5 rounded border border-amber-700 bg-[#2b1f14] text-amber-200 text-xs font-title font-bold hover:brightness-110">
+              🌳 Excavate Ancient Blowdown
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <h3 class="font-title text-xs uppercase tracking-wider text-amber-400 mb-2">Authenticated Ancient Artifact Discoveries</h3>
+          <div id="artifacts-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-[420px] overflow-y-auto scroll-ios pr-1"></div>
+        </div>
+      </div>
+
+      <div class="cabin-inset p-2.5 rounded border border-[#3d3126] flex justify-between items-center text-xs text-[#8a7b6a]">
+        <span>Ancient points and effigies are stored in your Cache Vault. St. Louis and Smithsonian collectors pay top dollar at the Auction Wall.</span>
+        <span class="text-amber-400 font-title">Deep Ridge Archaeology</span>
+      </div>
+    </section>
+
+    <!-- TAB 3: BUCK POLE & FIELD DRESSING -->
+    <section id="view-fielddress" class="tab-content hidden flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3">
+      
+      <!-- Hung Game on Pole -->
+      <div class="lg:col-span-4 cabin-panel rounded-lg p-3 flex flex-col justify-between max-h-[620px]">
+        <div>
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#3d3126]">
+            <h2 class="font-title font-bold text-amber-200 text-sm">🥩 The Buck Pole</h2>
+            <span id="pole-count-label" class="text-xs text-[#8a7b6a]">0 Hung</span>
+          </div>
+          <p class="text-xs text-[#8a7b6a] mb-2">Game retrieved from the timber. Field dress clean before rot sets in.</p>
+          <div id="quarry-list" class="space-y-2 overflow-y-auto max-h-[400px] scroll-ios pr-1"></div>
+        </div>
+      </div>
+
+      <!-- Field Dressing Slab & Trophies -->
+      <div class="lg:col-span-8 cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-[#3d3126]">
+            <div>
+              <h3 id="dress-quarry-name" class="font-title text-base sm:text-lg text-amber-300 font-bold">Buck Pole Empty</h3>
+              <p id="dress-quarry-sub" class="text-xs text-[#8a7b6a]">Loose an arrow from your treestand to harvest game.</p>
+            </div>
+            <span id="dress-purity-label" class="px-2.5 py-1 text-xs rounded bg-[#251b12] text-amber-300 border border-[#4d3723]">Cape Grade: --</span>
+          </div>
+
+          <div id="harvest-options-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 mb-3"></div>
+        </div>
+
+        <!-- Cache Vault Container -->
+        <div class="cabin-inset p-3 rounded border border-[#3d3126]">
+          <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
+            <div class="flex items-center gap-2">
+              <h4 class="font-title text-xs uppercase tracking-wider text-amber-400">Camp Cache Vault & Salt Packs</h4>
+              <span id="vault-count-badge" class="text-[10px] bg-[#241a12] text-amber-300 px-1.5 py-0.5 rounded border border-[#4d3926]">0 items</span>
+            </div>
+            <!-- Wares View Sorter -->
+            <div class="flex items-center gap-1.5 text-xs">
+              <span class="text-[#7b6b5a] text-[10px] uppercase font-title">Sort Wares:</span>
+              <select id="vault-sort-select" onchange="changeSortCriteria(this.value)" class="bg-[#1a140f] border border-[#524131] rounded text-amber-200 text-xs px-2 py-0.5 font-title">
+                <option value="val_desc">Value: High ➔ Low</option>
+                <option value="val_asc">Value: Low ➔ High</option>
+                <option value="rarity">Rarity / Tier</option>
+                <option value="category">Category</option>
+                <option value="name">Name (A-Z)</option>
+              </select>
+            </div>
+          </div>
+          <div id="vault-items-container" class="flex flex-wrap gap-2 max-h-36 overflow-y-auto scroll-ios"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TAB 4: FRONTIER TRADING POST AUCTION WALL (SELLING) -->
+    <section id="view-auction" class="tab-content hidden flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3">
+      
+      <!-- Lots in Cache & Multi-Pedestal Auto Fill Controls -->
+      <div class="lg:col-span-5 cabin-panel rounded-lg p-3 flex flex-col justify-between max-h-[660px]">
+        <div>
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#3d3126]">
+            <div>
+              <h2 class="font-title font-bold text-amber-200 text-sm">Trading Post Auction Wall</h2>
+              <p class="text-xs text-[#8a7b6a]">Stash artifacts, B&C racks, and pelts onto staging pedestals.</p>
+            </div>
+            <span id="auction-vault-count" class="text-xs text-[#8a7b6a]">0 Lots</span>
+          </div>
+
+          <!-- WARE SORTING TOOLBAR -->
+          <div class="cabin-inset p-2 rounded mb-2 border border-[#31251a]">
+            <div class="flex items-center justify-between text-xs mb-1.5">
+              <span class="text-amber-400 font-title text-[11px] uppercase tracking-wider font-bold">Wares Sorter:</span>
+              <span id="active-sort-label" class="text-[10px] text-emerald-400 font-mono-ledger">Value: High ➔ Low</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1 text-[10px] font-title">
+              <button onclick="setSortMode('val_desc')" id="sort-btn-val_desc" class="sort-chip px-1.5 py-1 rounded bg-[#2b1f13] border border-[#d4a359] text-amber-200 font-bold truncate">
+                💰 Value High➔Low
+              </button>
+              <button onclick="setSortMode('val_asc')" id="sort-btn-val_asc" class="sort-chip px-1.5 py-1 rounded bg-[#18130e] border border-[#3d2e20] text-[#8a7b6a] truncate">
+                💵 Value Low➔High
+              </button>
+              <button onclick="setSortMode('rarity')" id="sort-btn-rarity" class="sort-chip px-1.5 py-1 rounded bg-[#18130e] border border-[#3d2e20] text-[#8a7b6a] truncate">
+                ★ Tier / Rarity
+              </button>
+              <button onclick="setSortMode('category')" id="sort-btn-category" class="sort-chip px-1.5 py-1 rounded bg-[#18130e] border border-[#3d2e20] text-[#8a7b6a] truncate">
+                🏷 Category
+              </button>
+              <button onclick="setSortMode('name')" id="sort-btn-name" class="sort-chip px-1.5 py-1 rounded bg-[#18130e] border border-[#3d2e20] text-[#8a7b6a] truncate col-span-2">
+                🔤 Name (A ➔ Z)
+              </button>
+            </div>
+          </div>
+
+          <!-- AUTO-FILL PEDESTAL TOOLBAR -->
+          <div class="flex items-center gap-1.5 mb-2">
+            <button onclick="autoFillAuctionSlots()" class="flex-1 py-1.5 bg-gradient-to-r from-amber-900 to-[#382415] border border-amber-600 text-amber-100 font-title text-xs font-bold rounded hover:brightness-110 flex items-center justify-center gap-1">
+              <span>⚡</span> Auto-Fill Pedestals (Top 3)
+            </button>
+            <button onclick="clearAllAuctionSlots()" class="px-2.5 py-1.5 bg-[#1f1711] border border-[#4d3a29] text-[#cfc5b8] font-title text-xs rounded hover:text-white">
+              Clear
+            </button>
+          </div>
+
+          <label class="block text-xs font-title text-[#bba996] mb-1 uppercase">Available Pack Inventory:</label>
+          <div id="auction-vault-list" class="space-y-1.5 max-h-48 overflow-y-auto scroll-ios pr-1"></div>
+        </div>
+
+        <!-- Manual Reserve Adjustment for Focused Pedestal -->
+        <div class="cabin-inset p-2.5 rounded border border-[#3d3126] mt-2">
+          <div class="flex justify-between items-center mb-1 text-xs">
+            <span class="text-[#bba996]">Active Pedestal Reserve:</span>
+            <span id="auction-reserve-display" class="font-bold text-emerald-400 font-mono-ledger">$120</span>
+          </div>
+          <input type="range" id="auction-reserve-slider" min="20" max="1500" step="10" value="120" class="w-full mb-2" oninput="updateAuctionReservePrice(this.value)">
+          <div class="flex gap-2">
+            <button id="btn-open-auction" onclick="openTradingPostAuction()" class="flex-1 py-2 bg-gradient-to-r from-[#442c17] to-[#1e1309] border border-[#d4a359] text-amber-200 font-title text-xs font-bold rounded hover:brightness-110">
+              GAVEL ACTIVE PEDESTAL
+            </button>
+            <button id="btn-run-all-auctions" onclick="runAllAuctionPedestals()" class="flex-1 py-2 bg-gradient-to-r from-emerald-950 to-[#102416] border border-emerald-600 text-emerald-200 font-title text-xs font-bold rounded hover:brightness-110">
+              RUN ALL PEDESTALS
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Bidding Room & 3 Simultaneous Pedestals -->
+      <div class="lg:col-span-7 cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#3d3126]">
+            <h3 class="font-title font-bold text-amber-200 flex items-center gap-1.5 text-sm">
+              <span>🏛</span> The 3 Auction Pedestals & Bidding Parlor
+            </h3>
+            <span id="auction-status-tag" class="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-400 font-title">PARLOR QUIET</span>
+          </div>
+
+          <!-- THE 3 AUCTION PEDESTAL STAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2.5" id="pedestals-container">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Active Lot Focus Details -->
+          <div id="active-lot-banner" class="cabin-inset p-2.5 rounded border border-[#3d3126] mb-2.5">
+            <p class="text-xs text-[#705e4d] italic text-center py-2">Select or Auto-Fill a pedestal to open floor bidding.</p>
+          </div>
+
+          <!-- NPC Dialogue Feed -->
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <h4 class="font-title text-[11px] uppercase tracking-wider text-[#bba996] mb-1.5">Floor Offers & Dialogue</h4>
+            <div id="auction-banter-feed" class="h-32 sm:h-36 overflow-y-auto scroll-ios space-y-1 text-xs pr-1">
+              <p class="text-[#705e4d] italic">Present: Dr. Alistair Finch (Smithsonian Antiquarian), Lord Dunmore (British Big Game), Madame Beauchamp (St. Louis Furs), and Trapper Jed (Provisions).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gavel Drop & Multi-Run Status -->
+        <div class="flex items-center justify-between pt-2.5 border-t border-[#3d3126] mt-2">
+          <div id="multi-run-status" class="text-[11px] text-[#8a7b6a]">
+            Single or multi-lot resolution available.
+          </div>
+          <button id="btn-strike-gavel" onclick="finalizeAuctionSale()" disabled class="px-4 py-2 bg-gradient-to-r from-amber-950 to-[#2e1c0c] border border-amber-600 text-amber-200 font-title text-xs font-bold rounded hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed">
+            DROP GAVEL (SOLD)
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TAB 5: RIVER CACHE BARGAINS (1-5% DEEP ARBITRAGE) -->
+    <section id="view-bargains" class="tab-content hidden flex-1 cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between">
+      <div>
+        <div class="flex flex-wrap items-center justify-between pb-2.5 mb-3 border-b border-[#3d3126] gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="font-title font-bold text-base sm:text-lg text-amber-200">River Flat Caches & Dredge Bargains</h2>
+              <span class="bg-red-950 text-red-200 text-[10px] px-2 py-0.5 rounded border border-red-800 font-bold">1% – 5% VALUE</span>
+            </div>
+            <p class="text-xs text-[#8a7b6a]">Unidentified estate trunks, gravel bar dredge buckets, and trapper line lots sold off for pocket change!</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-[#8a7b6a]">Next Flatboat Arrival: <span id="bargain-countdown" class="text-amber-300 font-bold">2 Hunts</span></span>
+            <button onclick="bribeRiverTrader()" class="px-2.5 py-1 rounded border border-amber-700 bg-[#2d1f14] text-amber-200 text-xs font-title font-bold hover:brightness-110">
+              Tip Flatboat Scout ($25)
+            </button>
+          </div>
+        </div>
+
+        <div id="bargains-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3 overflow-y-auto max-h-[460px] scroll-ios"></div>
+      </div>
+
+      <div class="cabin-inset p-2.5 rounded border border-[#3d3126] mt-3 flex justify-between items-center text-xs text-[#8a7b6a]">
+        <span>Frontier Law: Buy uninspected dredge bundles at 1%–5% of true appraisal. Mount on the Auction Wall to profit.</span>
+        <span class="text-amber-400 font-title">Ohio & Missouri River Packet</span>
+      </div>
+    </section>
+
+    <!-- TAB 6: BOWYER'S WORKBENCH & GEAR -->
+    <section id="view-bowyer" class="tab-content hidden flex-1 grid grid-cols-1 lg:grid-cols-2 gap-3">
+      
+      <!-- Traditional Bows -->
+      <div class="cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between">
+        <div>
+          <h2 class="font-title font-bold text-amber-200 mb-1 text-sm">Traditional Bow Staves & Tillered Rigs</h2>
+          <p class="text-xs text-[#8a7b6a] mb-3">Self-bows, sinew backing, and horn-composite recurves.</p>
+          <div id="bows-list" class="space-y-2"></div>
+        </div>
+        <p class="text-[11px] text-[#705e4d] italic mt-2">Heavier draw weights increase arrow velocity (FPS) and kinetic bone penetration.</p>
+      </div>
+
+      <!-- Arrow Shafts, Points & Woodsman Tools -->
+      <div class="cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between">
+        <div>
+          <h2 class="font-title font-bold text-amber-200 mb-1 text-sm">Port Orford Cedar Shafts & Field Gear</h2>
+          <p class="text-xs text-[#8a7b6a] mb-3">Cut-on-contact heads, turkey helical fletching, and sifting screens.</p>
+          <div id="gear-list" class="space-y-2"></div>
+        </div>
+        <p class="text-[11px] text-[#705e4d] italic mt-2">Sifting screens uncover rare prehistoric artifacts while scouting.</p>
+      </div>
+
+    </section>
+
+    <!-- TAB 7: WOODSMAN'S CHRONICLE & STATS -->
+    <section id="view-ledger" class="tab-content hidden flex-1 cabin-panel rounded-lg p-3 sm:p-4 flex flex-col justify-between scroll-ios">
+      <div>
+        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-[#3d3126]">
+          <div>
+            <h2 class="font-title font-bold text-base sm:text-lg text-amber-200">The Master Woodsman's Chronicle</h2>
+            <p class="text-xs text-[#8a7b6a]">Certified Boone & Crockett entries, double-lung passes, and ancient artifact finds.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-[#8a7b6a]">Standing:</span>
+            <p id="ledger-rank-display" class="font-title font-bold text-amber-300">Cedar Ridge Scout</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Treestand Hunts</span>
+            <span id="st-hunts" class="text-lg font-bold text-amber-200">0</span>
+          </div>
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Double-Lung Passes</span>
+            <span id="st-doublelungs" class="text-lg font-bold text-emerald-400">0</span>
+          </div>
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Bone Deflections</span>
+            <span id="st-deflections" class="text-lg font-bold text-rose-400">0</span>
+          </div>
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Boone & Crockett Record</span>
+            <span id="st-record-score" class="text-lg font-bold text-yellow-300">0" Gross</span>
+          </div>
+
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Artifacts Unearthed</span>
+            <span id="st-artifacts-found" class="text-lg font-bold text-amber-300">0</span>
+          </div>
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Bull Elk Ivories</span>
+            <span id="st-ivories" class="text-lg font-bold text-zinc-200">0</span>
+          </div>
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Arbitrage Profit</span>
+            <span id="st-arbitrage" class="text-lg font-bold text-emerald-300">$0</span>
+          </div>
+          <div class="cabin-inset p-2.5 rounded border border-[#2b2016]">
+            <span class="text-[10px] font-title text-[#8a7b6a] block uppercase">Lifetime Earnings</span>
+            <span id="st-lifetime-cash" class="text-lg font-bold text-emerald-400">$420</span>
+          </div>
+        </div>
+
+        <div class="cabin-inset p-3 rounded border border-[#3d3126]">
+          <h3 class="font-title text-xs uppercase tracking-wider text-amber-400 mb-2">Woodsman Title Progression</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-xs">
+            <div id="title-step-1" class="p-2 rounded border border-amber-600 bg-[#2b1f13]">
+              <p class="font-title font-bold text-amber-200">1. Cedar Ridge Scout</p>
+              <p class="text-[10px] text-[#8a7b6a]">Learning the draws</p>
+            </div>
+            <div id="title-step-2" class="p-2 rounded border border-[#2b2016] opacity-50">
+              <p class="font-title font-bold text-zinc-300">2. Hardwood Stalker</p>
+              <p class="text-[10px] text-[#8a7b6a]">3 Clean Double Lungs</p>
+            </div>
+            <div id="title-step-3" class="p-2 rounded border border-[#2b2016] opacity-50">
+              <p class="font-title font-bold text-zinc-300">3. Master Antiquarian Hunter</p>
+              <p class="text-[10px] text-[#8a7b6a]">5 Prehistoric Artifacts & $2,000</p>
+            </div>
+            <div id="title-step-4" class="p-2 rounded border border-[#2b2016] opacity-50">
+              <p class="font-title font-bold text-zinc-300">4. Legend of the Timberline</p>
+              <p class="text-[10px] text-[#8a7b6a]">B&C Buck over 170" & $6,000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 pt-2 border-t border-[#3d3126] text-xs text-[#8a7b6a] flex justify-between items-center">
+        <span>Recorded by Camp Log.</span>
+        <button onclick="resetWoodsmanLog()" class="text-red-400 hover:underline">Clear Chronicle</button>
+      </div>
+    </section>
+
+    <!-- TAB 8: BALLISTICS & ARTIFACT MANUAL -->
+    <section id="view-manual" class="tab-content hidden flex-1 cabin-panel rounded-lg p-3 sm:p-5 scroll-ios max-h-[640px]">
+      <div class="border-b border-[#3d3126] pb-2.5 mb-3">
+        <h2 class="font-title font-bold text-lg text-amber-200 flex items-center gap-2">
+          <span>📖</span> The Treestand Ballistics & Antiquities Codex
+        </h2>
+        <p class="text-xs text-[#8a7b6a]">Downward pendulum trigonometry, vital anatomy, cut-on-contact points, and lithic dating.</p>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm leading-relaxed">
+        <div class="cabin-inset p-3 rounded border border-[#2b2016]">
+          <h3 class="font-title font-bold text-amber-300 text-sm mb-1.5">I. Elevated Treestand Ballistics: True Horizontal Range</h3>
+          <p class="text-[#cfc5b8] mb-2">
+            Perched 20 feet up in a mature white oak, gravity only acts on the horizontal distance, not the hypotenuse (line-of-sight).
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-[#a89988]">
+            <li><strong>Line-of-Sight vs. True Distance:</strong> A buck at 24 line-of-sight yards from a 20ft perch is actually only 21.8 horizontal yards away. Aiming for 24 yards results in shooting over the back.</li>
+            <li><strong>Downward Entry / Low Exit:</strong> An arrow entering high on the ribcage and exiting low behind the offside front leg collapses both lungs and leaves an immediate, heavy blood trail.</li>
+            <li><strong>Shoulder Scapula Plate:</strong> Traditional arrows hitting heavy bone fail to penetrate, snapping the wooden shaft and leaving the game unharmed.</li>
+          </ul>
+        </div>
+
+        <div class="cabin-inset p-3 rounded border border-[#2b2016]">
+          <h3 class="font-title font-bold text-amber-300 text-sm mb-1.5">II. Authentic Prehistoric Artifact Horizons</h3>
+          <p class="text-[#cfc5b8] mb-2">
+            The Midwest and eastern hardwood forests host deep cultural stratigraphy washed clean in gravel bars:
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-[#a89988]">
+            <li><strong>Paleo-Indian (13,000–10,000 BP):</strong> Fluted Clovis and Folsom points knapped from Flint Ridge or translucent chalcedony. Characterized by long central flute channels for split-shaft hafting.</li>
+            <li><strong>Archaic Period (10,000–3,000 BP):</strong> Ground slate bannerstones (atlatl weights), Dalton serrated knives, and hematite plummets.</li>
+            <li><strong>Woodland & Mississippian (3,000–500 BP):</strong> Carved Catlinite raptor effigy pipes, Great Lakes hammered copper gorgets, and engraved shell masks.</li>
+          </ul>
+        </div>
+
+        <div class="cabin-inset p-3 rounded border border-[#2b2016]">
+          <h3 class="font-title font-bold text-amber-300 text-sm mb-1.5">III. The 1%–5% River Dredge Arbitrage</h3>
+          <p class="text-[#cfc5b8] mb-2">
+            Flatboat dredgers along the Ohio and Missouri rivers haul up gravel deposits containing ancient points mixed with river debris. Unaware of lithic typologies, they sell unsifted bundles for pennies on the dollar.
+          </p>
+          <p class="text-[#a89988]">
+            Buy a $32 uninspected gravel bucket containing an appraised $850 Clovis point, and take it to the Trading Post to sell to Dr. Alistair Finch.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= POST-SHOT REPORT MODAL (IOS SAFE) ================= -->
+  <div id="post-shot-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center p-3 z-50 hidden">
+    <div class="cabin-panel border-2 border-amber-600 rounded-lg max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl">
+      
+      <div class="p-3 border-b border-[#4d3c2e] flex items-center justify-between bg-[#241a12] rounded-t-lg shrink-0">
+        <h3 id="ps-modal-title" class="font-title font-bold text-amber-300 text-sm sm:text-base flex items-center gap-1.5">
+          <span>🎯</span> Treestand Harvest Report
+        </h3>
+        <span id="ps-badge" class="px-2 py-0.5 rounded text-[10px] font-title uppercase font-bold bg-emerald-950 text-emerald-300 border border-emerald-700">DOUBLE LUNG DROP</span>
+      </div>
+
+      <div class="p-3 sm:p-4 scroll-ios flex-1 space-y-3 text-xs sm:text-sm">
+        <div class="parchment-card p-3 rounded text-center">
+          <p class="font-title font-bold text-base uppercase text-stone-900" id="ps-target-name">10-Point Monarch Buck</p>
+          <p class="font-title text-xs text-stone-800" id="ps-target-stats">Gross Boone & Crockett: 164 2/8" • 215 lbs</p>
+          <div class="my-1.5 border-t border-b border-[#544332] py-1 font-title font-bold text-emerald-900 text-sm" id="ps-trophy-summary">
+            CLEAN PASS-THROUGH • 100% UNBLEMISHED CAPE
+          </div>
+          <p class="italic text-[11px] text-stone-700" id="ps-lead-narrative">The Port Orford cedar shaft flew silent and true.</p>
+        </div>
+
+        <div class="cabin-inset p-3 rounded border border-[#2b2016] space-y-1.5">
+          <h4 class="font-title text-amber-400 text-xs uppercase">Arrow Flight & Anatomical Impact Breakdown</h4>
+          <p id="ps-narrative-text" class="text-[#cfc5b8] leading-relaxed text-xs">Trauma description.</p>
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-[#2b2016] text-[11px] text-[#8a7b6a]">
+            <div>True Distance: <span id="ps-dist" class="text-amber-200 font-bold">21.8 yds</span></div>
+            <div>Impact Energy: <span id="ps-ke" class="text-amber-200 font-bold">46.8 ft-lbs</span></div>
+            <div>Cape Purity: <span id="ps-purity" class="text-emerald-400 font-bold">98%</span></div>
+            <div>B&C Score: <span id="ps-score" class="text-yellow-400 font-bold">164"</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 border-t border-[#4d3c2e] bg-[#17110c] rounded-b-lg flex flex-col sm:flex-row gap-2 justify-end shrink-0">
+        <button onclick="transferToBuckPole()" class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-[#442c17] to-[#1e1309] border border-[#d4a359] text-amber-200 font-title text-xs font-bold rounded hover:brightness-110 text-center">
+          🥩 Hang on the Buck Pole
+        </button>
+        <button onclick="closePostShotModal()" class="w-full sm:w-auto px-3 py-2 bg-[#251c14] border border-[#4d3c2e] text-[#cfc5b8] font-title text-xs rounded hover:text-white text-center">
+          Close Report
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL: GREAT SPIRIT / GOD MODE ================= -->
+  <div id="god-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-3 z-50 hidden">
+    <div class="cabin-panel border-2 border-amber-600 rounded-lg max-w-md w-full p-4 space-y-3 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-[#4d3c2e] pb-2">
+        <h3 class="font-title font-bold text-amber-300 text-sm flex items-center gap-1.5">
+          ⚡ Great Spirit / Woodsman God Mode
+        </h3>
+        <button onclick="toggleModal('god-modal')" class="text-zinc-400 hover:text-white font-mono">✕</button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 text-xs font-title">
+        <button onclick="cheatAddCash(10000)" class="p-2.5 rounded bg-[#2e1f13] border border-amber-700 text-amber-200 hover:bg-[#3d2a1a]">
+          +$10,000 Cash
+        </button>
+        <button onclick="cheatAutoAimVitals()" class="p-2.5 rounded bg-[#2e1f13] border border-amber-700 text-amber-200 hover:bg-[#3d2a1a]">
+          🎯 Calibrate Perfect Hold-Under
+        </button>
+        <button onclick="cheatUnlockAllBows()" class="p-2.5 rounded bg-[#2e1f13] border border-amber-700 text-amber-200 hover:bg-[#3d2a1a]">
+          Unlock All Traditional Rigs
+        </button>
+        <button onclick="cheatSpawnLegendaryElk()" class="p-2.5 rounded bg-[#2e1f13] border border-amber-700 text-amber-200 hover:bg-[#3d2a1a]">
+          Spawn 380" Monster Bull Elk
+        </button>
+        <button onclick="cheatSpawnUltraRareArtifact()" class="col-span-2 p-2.5 rounded bg-[#2e1f13] border border-amber-700 text-amber-200 hover:bg-[#3d2a1a]">
+          Discover Pristine Clovis Point & Effigy Pipe
+        </button>
+        <button onclick="cheatRestockBargains()" class="col-span-2 p-2.5 rounded bg-[#2e1f13] border border-amber-700 text-amber-200 hover:bg-[#3d2a1a]">
+          Replenish 1%–5% River Bargains
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-4 right-4 max-w-xs cabin-panel border border-[#d4a359] px-3 py-2.5 rounded shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none z-50 text-xs">
+    <p id="toast-title" class="font-title font-bold text-amber-300"></p>
+    <p id="toast-msg" class="text-[#cfc5b8] mt-0.5"></p>
+  </div>
+
+  <!-- ================= JAVASCRIPT GAME ENGINE (NO AUDIO) ================= -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. ARTIFACTS DATABASE (12 Prehistoric & Ancient Items)
+       -------------------------------------------------------------------------- */
+    const AUTHENTIC_ARTIFACTS = [
+      {
+        id: 'art_clovis',
+        name: 'Fluted Clovis Point (Flint Ridge Chert)',
+        period: 'Paleo-Indian (13,000 BP)',
+        loc: 'Limestone Gravel Washout',
+        trueVal: 950,
+        desc: 'Fluted central channel for split foreshaft mounting. Intact ear auricles.'
+      },
+      {
+        id: 'art_folsom',
+        name: 'Folsom Fluted Point (Translucent Chalcedony)',
+        period: 'Paleo-Indian (11,000 BP)',
+        loc: 'Sandstone Bluff Crevice',
+        trueVal: 880,
+        desc: 'Exquisite paper-thin pressure flaking extending past 80% of blade length.'
+      },
+      {
+        id: 'art_dalton',
+        name: 'Dalton Serrated Knife & Adze',
+        period: 'Early Archaic (9,500 BP)',
+        loc: 'Uprooted Oak Roots',
+        trueVal: 620,
+        desc: 'Deep micro-serrations resharpened bevel-edge; used for carving spear shafts.'
+      },
+      {
+        id: 'art_bannerstone',
+        name: 'Polished Slate Atlatl Bannerstone',
+        period: 'Middle Archaic (6,000 BP)',
+        loc: 'Creek Terrace Silt Bed',
+        trueVal: 1100,
+        desc: 'Hourglass drilled hole through banded slate; balanced spear-thrower counterweight.'
+      },
+      {
+        id: 'art_birdstone',
+        name: 'Polished Banded Slate Birdstone',
+        period: 'Late Archaic / Glacial Kame (3,500 BP)',
+        loc: 'Glacial Gravel Kame Bar',
+        trueVal: 1450,
+        desc: 'Stylized pop-eyed avian sculpture with drilled anterior and posterior biconical holes.'
+      },
+      {
+        id: 'art_effigy_pipe',
+        name: 'Carved Catlinite (Pipestone) Raptor Effigy Pipe',
+        period: 'Mississippian Horizon (900 BP)',
+        loc: 'Ancient Bluff Burial Overhang',
+        trueVal: 1850,
+        desc: 'Deep crimson pipestone carved in the form of a falcon with weeping eye motif.'
+      },
+      {
+        id: 'art_plummet',
+        name: 'Pitted Hematite Tear-Drop Plummet',
+        period: 'Late Archaic (4,000 BP)',
+        loc: 'River Confluence Wash',
+        trueVal: 480,
+        desc: 'Heavy magnetic iron oxide ground into a symmetrical fishing or net weight.'
+      },
+      {
+        id: 'art_copper_gorget',
+        name: 'Hammered Native Lake Superior Copper Gorget',
+        period: 'Old Copper Culture (5,000 BP)',
+        loc: 'Eroded Creek Bank Cut',
+        trueVal: 1250,
+        desc: 'Cold-hammered glacial copper sheet with twin suspension holes for neck wear.'
+      },
+      {
+        id: 'art_shell_gorget',
+        name: 'Mississippian Shell Gorget with Weeping Eye',
+        period: 'Mississippian (800 BP)',
+        loc: 'Collapsed Sand Cave',
+        trueVal: 1600,
+        desc: 'Marine whelk shell engraved with the sacred Southeastern Ceremonial Complex raptor eye.'
+      },
+      {
+        id: 'art_dover_sword',
+        name: 'Dover Chert Ceremonial Biface Sword',
+        period: 'Woodland / Hopewell (2,000 BP)',
+        loc: 'River Basin Terrace',
+        trueVal: 1750,
+        desc: 'Massive 11-inch ceremonial blade knapped from Tennessee Dover chert.'
+      },
+      {
+        id: 'art_bead_strand',
+        name: 'Turquoise & Dentalium Shell Bead Strand',
+        period: 'Ancient Trade Horizon',
+        loc: 'Dry Limestone Shelf',
+        trueVal: 720,
+        desc: 'Over 60 perforated shells and drilled green turquoise trade beads.'
+      },
+      {
+        id: 'art_cord_pot',
+        name: 'Intact Woodland Cord-Marked Clay Vessel',
+        period: 'Middle Woodland (1,800 BP)',
+        loc: 'Exposed Mud Cliff',
+        trueVal: 920,
+        desc: 'Conical earthenware vessel impressed with paddle-twisted cord fiber.'
+      }
+    ];
+
+    /* --------------------------------------------------------------------------
+       2. TRADITIONAL BOWS & GEAR CONFIGURATION
+       -------------------------------------------------------------------------- */
+    const TRADITIONAL_BOWS = [
+      { id: 'bow_hickory', name: 'Hickory Flatbow (45# @ 28")', drawWeight: 45, fps: 155, cost: 0, owned: true, desc: 'Straight-limbed rustic timber flatbow. Reliable in damp autumn hollows.' },
+      { id: 'bow_osage', name: 'Osage Orange Self-Bow (55# @ 28")', drawWeight: 55, fps: 178, cost: 260, owned: false, desc: 'Yellow bois d\'arc wood with sinewy back. Snappy cast and high durability.' },
+      { id: 'bow_yew', name: 'Sinew-Backed Pacific Yew (65# @ 28")', drawWeight: 65, fps: 196, cost: 480, owned: false, desc: 'Fine-grained heartwood and sapwood belly backed with deer leg sinew.' },
+      { id: 'bow_composite', name: 'Horn-Wood Composite Recurve (75# @ 28")', drawWeight: 75, fps: 215, cost: 750, owned: false, desc: 'Water buffalo horn belly with laminated reflex tips. Crushing kinetic penetration.' }
+    ];
+
+    const FIELD_GEAR = [
+      { id: 'g_cedar_shafts', name: 'Spine-Matched Port Orford Cedar Shafts', cost: 110, owned: false, desc: 'Balanced 540gr wooden shafts that dampen paradox flutter for straight penetration.' },
+      { id: 'g_helical', name: 'Trueflight Wild Turkey Helical Fletch', cost: 85, owned: false, desc: 'Heavy helical feather clamp stabilizes broadheads in crosswinds.' },
+      { id: 'g_screen', name: 'Archaeological Hardwood Sifting Screen', cost: 160, owned: false, desc: 'Boosts ancient artifact recovery rate in creek crossings by +45%.' },
+      { id: 'g_scent', name: 'Rutting Buck Tarsal & Estrus Scent', cost: 90, owned: false, desc: 'Stops cruising bucks broadside directly in your primary shooting lane.' }
+    ];
+
+    /* --------------------------------------------------------------------------
+       3. GAME STATE
+       -------------------------------------------------------------------------- */
+    const state = {
+      day: 1,
+      dollars: 420,
+      activeBowId: 'bow_hickory',
+      standHeightFt: 20,
+      windSpeedMph: 4,
+
+      // Trajectory and Lane Setup
+      selectedLane: 2,
+      aimAngleVal: 145,
+      arrowInFlight: false,
+
+      // Targets in area
+      encounters: [],
+      selectedEncounterId: null,
+
+      // Buck pole / Mortuary
+      quarry: [],
+      selectedQuarryId: null,
+
+      // Vault Inventory (trophies + artifacts)
+      vaultItems: [],
+      sortCriteria: 'val_desc', // val_desc, val_asc, rarity, category, name
+
+      // Discovered Artifacts Codex
+      discoveredArtifacts: [],
+
+      // 3 Simultaneous Auction Pedestals / Slots
+      pedestals: [
+        { slot: 0, item: null, reserve: 0, status: 'empty' },
+        { slot: 1, item: null, reserve: 0, status: 'empty' },
+        { slot: 2, item: null, reserve: 0, status: 'empty' }
+      ],
+      focusedPedestalSlot: 0,
+      activeAuction: null,
+      auctionTimer: null,
+      isMultiRunning: false,
+      selectedAuctionItemId: null,
+      auctionReserve: 120,
+
+      // River Bargains
+      bargains: [],
+      bargainCountdown: 2,
+
+      // Stats
+      stats: {
+        hunts: 0,
+        doubleLungs: 0,
+        boneDeflections: 0,
+        recordScore: 0,
+        artifactsFound: 0,
+        ivories: 0,
+        arbitrageProfit: 0,
+        lifetimeCash: 420
+      },
+
+      rankIndex: 0
+    };
+
+    const WOODSMAN_TITLES = [
+      'Cedar Ridge Scout',
+      'Hardwood Stalker',
+      'Master Antiquarian Hunter',
+      'Legend of the Timberline'
+    ];
+
+    /* --------------------------------------------------------------------------
+       4. INITIALIZATION
+       -------------------------------------------------------------------------- */
+    function initGame() {
+      spawnRutEncounters();
+      populateRiverBargains();
+      renderBowyerShop();
+      renderArtifactsVault();
+      updateBallisticPhysics();
+      updateUI();
+      renderStats();
+      drawTrajectoryCanvas('idle');
+    }
+
+    function spawnRutEncounters() {
+      state.encounters = [
+        generateGameAnimal('Whitetail', '10-Point Monarch Buck', 215, 164, 2),
+        generateGameAnimal('Whitetail', 'Heavy 8-Point Mainframe Buck', 190, 142, 1),
+        generateGameAnimal('Whitetail', 'Wide 6-Point Cruiser', 165, 118, 3)
+      ];
+      state.selectedEncounterId = state.encounters[0].id;
+    }
+
+    function generateGameAnimal(species, name, weight, bcScore, preferredLane) {
+      return {
+        id: 'GAME-' + Math.floor(100 + Math.random() * 900),
+        species: species,
+        name: name,
+        weightLbs: weight,
+        bcScore: bcScore,
+        lane: preferredLane,
+        posture: 'Broadside Quartering-Away',
+        alertLevel: 'Calm Rut Feeding'
+      };
+    }
+
+    function populateRiverBargains() {
+      state.bargains = [];
+      const templates = [
+        { title: 'Unsifted Ohio River Gravel Dredge Bucket', cat: 'Artifact', trueVal: 850 },
+        { title: 'Deceased Mountain Man Salt-Cured Fur Bale', cat: 'Furs', trueVal: 620 },
+        { title: 'Flint Ridge Artifact Lot from Farm Cellar', cat: 'Artifact', trueVal: 920 },
+        { title: 'Weathered Wapiti Elk Horn & Ivory Pack', cat: 'Trophy', trueVal: 740 },
+        { title: 'Cured Winter Beaver & Otter Pelt Bundle', cat: 'Furs', trueVal: 510 }
+      ];
+
+      for (let i = 0; i < 3; i++) {
+        const item = templates[Math.floor(Math.random() * templates.length)];
+        const trueVal = Math.floor(item.trueVal * (1.0 + Math.random() * 0.4));
+        const pct = Math.floor(Math.random() * 4) + 1; // 1% to 5%
+        const price = Math.max(12, Math.round(trueVal * (pct / 100)));
+
+        state.bargains.push({
+          id: 'BARGAIN-' + Math.floor(100 + Math.random() * 900),
+          title: item.title,
+          category: item.cat,
+          trueAppraisal: trueVal,
+          discountPct: 100 - pct,
+          price: price
+        });
+      }
+      renderBargains();
+    }
+
+    /* --------------------------------------------------------------------------
+       5. ELEVATED TREESTAND BALLISTICS & ARC PHYSICS
+       -------------------------------------------------------------------------- */
+    function getActiveBow() {
+      return TRADITIONAL_BOWS.find(b => b.id === state.activeBowId) || TRADITIONAL_BOWS[0];
+    }
+
+    function getActiveTarget() {
+      return state.encounters.find(e => e.id === state.selectedEncounterId) || state.encounters[0];
+    }
+
+    function changeLane(laneNum) {
+      state.selectedLane = parseInt(laneNum);
+      const laneNames = { 1: 'Lane A (15 yds - Brush Gap)', 2: 'Lane B (22 yds - Main Scrape)', 3: 'Lane C (32 yds - Oak Ridge)' };
+      document.getElementById('val-lane-display').textContent = laneNames[state.selectedLane];
+      updateBallisticPhysics();
+      drawTrajectoryCanvas('idle');
+    }
+
+    function updateBallisticPhysics() {
+      state.aimAngleVal = parseInt(document.getElementById('slider-aim-angle').value);
+      const holdDegrees = (state.aimAngleVal / 10).toFixed(1);
+      document.getElementById('val-hold-angle').textContent = `${holdDegrees}° Down`;
+
+      const bow = getActiveBow();
+      const target = getActiveTarget();
+      if (!target) return;
+
+      // Distance geometry
+      const laneDistances = { 1: 15, 2: 22, 3: 32 };
+      const horizontalYards = laneDistances[state.selectedLane];
+      const standHeightYards = state.standHeightFt / 3; // ~6.67 yds
+
+      // Pythagorean Line-of-sight
+      const lineOfSightYards = Math.sqrt(Math.pow(horizontalYards, 2) + Math.pow(standHeightYards, 2));
+
+      // Arrow kinetic energy: KE = (grains * FPS^2) / 450,240
+      const arrowGrains = hasUpgrade('g_cedar_shafts') ? 560 : 490;
+      let fps = bow.fps;
+      if (hasUpgrade('g_helical')) fps += 4;
+      const kineticEnergy = Math.round((arrowGrains * Math.pow(fps, 2)) / 450240 * 10) / 10;
+
+      // Ballistic hold requirement:
+      // Real arc drop increases with distance. Ideal hold-under degrees for down angle:
+      const idealAngle = (10 + (horizontalYards * 0.72)).toFixed(1);
+      const diff = Math.abs(parseFloat(holdDegrees) - parseFloat(idealAngle));
+
+      let zoneTag = 'DOUBLE LUNG (VITALS)';
+      let zoneClass = 'text-emerald-400 font-bold';
+
+      if (diff <= 1.2) {
+        zoneTag = 'HEART & DOUBLE LUNG PASS-THROUGH';
+        zoneClass = 'text-emerald-400 font-bold';
+      } else if (diff <= 3.0) {
+        zoneTag = 'LUNG MARGIN / HIGH EXIT';
+        zoneClass = 'text-amber-300 font-bold';
+      } else if (parseFloat(holdDegrees) < parseFloat(idealAngle) - 3.0) {
+        zoneTag = 'SHOULDER SCAPULA (BONE DEFLECTION)';
+        zoneClass = 'text-rose-500 font-bold';
+      } else {
+        zoneTag = 'PAUNCH / GUT GRAZE';
+        zoneClass = 'text-orange-400 font-bold';
+      }
+
+      document.getElementById('tele-los').textContent = `${lineOfSightYards.toFixed(1)} yds`;
+      document.getElementById('tele-gravity-yds').textContent = `${horizontalYards.toFixed(1)} yds`;
+      document.getElementById('tele-kinetic').textContent = `${kineticEnergy} ft-lbs`;
+      const zEl = document.getElementById('tele-zone-tag');
+      zEl.textContent = zoneTag;
+      zEl.className = zoneClass;
+
+      return { lineOfSightYards, horizontalYards, kineticEnergy, diff, zoneTag };
+    }
+
+    function releaseArrowTrajectory() {
+      const target = getActiveTarget();
+      if (!target) {
+        showToast('No Quarry', 'No game animal cruising within your shooting lanes.');
+        return;
+      }
+      if (state.arrowInFlight) return;
+
+      state.arrowInFlight = true;
+      document.getElementById('btn-release-arrow').disabled = true;
+
+      const p = updateBallisticPhysics();
+
+      // Animate Arrow Flight on Canvas
+      let progress = 0;
+      const animTimer = setInterval(() => {
+        progress += 0.08;
+        drawTrajectoryCanvas('flying', progress);
+
+        if (progress >= 1.0) {
+          clearInterval(animTimer);
+          state.arrowInFlight = false;
+          document.getElementById('btn-release-arrow').disabled = false;
+          resolveArrowImpact(target, p);
+        }
+      }, 35);
+    }
+
+    function resolveArrowImpact(target, p) {
+      let hitType = '';
+      let purity = 95;
+      let capeGrade = 'Pristine 100% Unblemished';
+      let narrative = '';
+
+      if (p.diff <= 3.0) {
+        // Vital Hit
+        hitType = 'double_lung';
+        purity = 98;
+        state.stats.doubleLungs++;
+        drawTrajectoryCanvas('hit_vitals');
+
+        document.getElementById('hit-feedback-indicator').textContent = 'DOUBLE LUNG PASS-THROUGH';
+        document.getElementById('hit-feedback-indicator').className = 'absolute bottom-2 right-3 text-xs font-title text-emerald-400 bg-black/80 px-2 py-0.5 rounded border border-emerald-700 block';
+
+        narrative = `The 2-blade broadhead sliced through ribs like parchment at ${p.kineticEnergy} ft-lbs of kinetic force! The high entry behind the shoulder exited low on the offside brisket, dropping the ${target.name} within 35 yards. The cape and winter fur remain 100% free of blood taint, ensuring top dollar at the trading post.`;
+      } else if (p.zoneTag.includes('BONE DEFLECTION')) {
+        // Scapula bone deflection
+        hitType = 'scapula_deflect';
+        purity = 35;
+        state.stats.boneDeflections++;
+        drawTrajectoryCanvas('deflect');
+
+        document.getElementById('hit-feedback-indicator').textContent = 'SCAPULA BONE DEFLECTION';
+        document.getElementById('hit-feedback-indicator').className = 'absolute bottom-2 right-3 text-xs font-title text-rose-400 bg-black/80 px-2 py-0.5 rounded border border-rose-700 block';
+
+        narrative = `The wooden shaft struck the dense scapula ridge! Lacking compound wheel velocity, the arrow failed to punch through the heavy shoulder bone. The cedar shaft snapped in twain as the ${target.name} bounded safely over the oak ridge.`;
+      } else {
+        // Paunch
+        hitType = 'paunch';
+        purity = 55;
+        drawTrajectoryCanvas('hit_paunch');
+
+        document.getElementById('hit-feedback-indicator').textContent = 'LOW PAUNCH HIT';
+        document.getElementById('hit-feedback-indicator').className = 'absolute bottom-2 right-3 text-xs font-title text-orange-400 bg-black/80 px-2 py-0.5 rounded border border-orange-700 block';
+
+        narrative = `Aim hold was too low; the broadhead caught the belly flank. After a long recovery through the blackberry briars, the game was retrieved, but bile stained the winter flank hair, reducing cape value.`;
+      }
+
+      state.stats.hunts++;
+      if (target.bcScore > state.stats.recordScore && hitType !== 'scapula_deflect') {
+        state.stats.recordScore = target.bcScore;
+      }
+
+      // If harvested, add to Buck Pole
+      if (hitType !== 'scapula_deflect') {
+        state.quarry.unshift({
+          id: 'QUARRY-' + target.id,
+          name: target.name,
+          species: target.species,
+          weight: target.weightLbs,
+          bcScore: target.bcScore,
+          hitType: hitType,
+          purity: purity,
+          harvested: []
+        });
+
+        // Remove from active encounters
+        state.encounters = state.encounters.filter(e => e.id !== target.id);
+        state.selectedEncounterId = state.encounters.length > 0 ? state.encounters[0].id : null;
+
+        openPostShotModal(target, hitType, narrative, p.horizontalYards, p.kineticEnergy, purity);
+      } else {
+        showToast('Arrow Deflected', 'Scapula stopped the broadhead. Animal escaped unharmed.');
+      }
+
+      updateCareerRank();
+      updateUI();
+      renderStats();
+    }
+
+    /* --------------------------------------------------------------------------
+       6. TRAJECTORY CANVAS (SIDE-PROFILE ELEVATION & ARROW FLIGHT)
+       -------------------------------------------------------------------------- */
+    function drawTrajectoryCanvas(mode, flightProgress = 0) {
+      const canvas = document.getElementById('trajectory-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width = canvas.parentElement.clientWidth;
+      const h = canvas.height = canvas.parentElement.clientHeight;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Sky & Timber Canopy Background
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+      skyGrad.addColorStop(0, '#101411');
+      skyGrad.addColorStop(0.65, '#212920');
+      skyGrad.addColorStop(1, '#3b2f21');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Forest Floor / Ridge Line
+      const groundY = h * 0.82;
+      ctx.fillStyle = '#241a12';
+      ctx.fillRect(0, groundY, w, h - groundY);
+
+      // Fallen Timber & Leaves
+      ctx.fillStyle = '#423120';
+      ctx.fillRect(w * 0.35, groundY - 4, w * 0.3, 6);
+
+      // 1. ELEVATED TREESTAND & OAK TRUNK (LEFT SIDE)
+      const treeX = w * 0.12;
+      ctx.fillStyle = '#1e1610';
+      ctx.fillRect(treeX - 16, 0, 32, groundY); // Oak trunk
+
+      // Treestand Platform (20 ft up)
+      const standY = h * 0.28;
+      ctx.fillStyle = '#523c28';
+      ctx.fillRect(treeX, standY, 32, 6); // Platform
+      ctx.strokeStyle = '#382819';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(treeX, standY);
+      ctx.lineTo(treeX + 32, standY + 18); // Support bracket
+      ctx.stroke();
+
+      // Hunter Silhouette with Traditional Bow
+      const hunterX = treeX + 14;
+      const hunterY = standY - 2;
+      ctx.fillStyle = '#140f0b';
+      ctx.fillRect(hunterX - 4, hunterY - 26, 8, 26); // Body
+      ctx.beginPath();
+      ctx.arc(hunterX, hunterY - 32, 5, 0, Math.PI * 2); // Head & cap
+      ctx.fill();
+
+      // Drawn Traditional Bow Arc
+      ctx.strokeStyle = '#c48a3f';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(hunterX + 10, hunterY - 14, 18, -Math.PI * 0.35, Math.PI * 0.35);
+      ctx.stroke();
+
+      // 2. TARGET ANIMAL PROFILE (RIGHT SIDE)
+      const targetLaneX = { 1: w * 0.55, 2: w * 0.72, 3: w * 0.88 };
+      const deerX = targetLaneX[state.selectedLane] || w * 0.72;
+      const deerY = groundY - 2;
+
+      // Whitetail Silhouette
+      ctx.fillStyle = '#2f2015';
+      // Torso
+      ctx.fillRect(deerX - 22, deerY - 28, 44, 20);
+      // Legs
+      ctx.fillRect(deerX - 18, deerY - 8, 4, 18);
+      ctx.fillRect(deerX + 12, deerY - 8, 4, 18);
+      // Neck & Head
+      ctx.beginPath();
+      ctx.moveTo(deerX - 22, deerY - 24);
+      ctx.lineTo(deerX - 32, deerY - 42);
+      ctx.lineTo(deerX - 24, deerY - 42);
+      ctx.lineTo(deerX - 14, deerY - 24);
+      ctx.fill();
+
+      // Antlers
+      ctx.strokeStyle = '#e6dcce';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(deerX - 28, deerY - 42);
+      ctx.lineTo(deerX - 34, deerY - 58);
+      ctx.lineTo(deerX - 40, deerY - 54);
+      ctx.moveTo(deerX - 32, deerY - 50);
+      ctx.lineTo(deerX - 24, deerY - 56);
+      ctx.stroke();
+
+      // Vital V-Zone (Heart & Double Lung)
+      const vitalsX = deerX - 6;
+      const vitalsY = deerY - 18;
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(vitalsX - 8, vitalsY - 7, 14, 14);
+
+      // 3. ARROW TRAJECTORY (CURVED BALLISTIC ARC)
+      const startX = hunterX + 12;
+      const startY = hunterY - 14;
+      const targetX = vitalsX;
+      const targetY = vitalsY;
+
+      // Arc apex influenced by down angle
+      const midX = (startX + targetX) * 0.5;
+      const midY = Math.min(startY, targetY) - 14;
+
+      if (mode === 'idle') {
+        // Projected Faint Arc Guide
+        ctx.strokeStyle = 'rgba(212, 163, 89, 0.25)';
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.quadraticCurveTo(midX, midY, targetX, targetY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      } else if (mode === 'flying') {
+        // Render Arrow in flight
+        const t = flightProgress;
+        const curX = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * midX + t * t * targetX;
+        const curY = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * midY + t * t * targetY;
+
+        // Shaft
+        ctx.strokeStyle = '#d4a359';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(curX - 12, curY - 3);
+        ctx.lineTo(curX, curY);
+        ctx.stroke();
+
+        // White Turkey Feathers
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(curX - 14, curY - 5, 4, 3);
+      } else if (mode === 'hit_vitals') {
+        // Blood Spray & Pass-Through Arrow
+        ctx.fillStyle = '#8f1d1d';
+        ctx.beginPath();
+        ctx.arc(vitalsX, vitalsY, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Arrow sticking out
+        ctx.strokeStyle = '#d4a359';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(vitalsX - 16, vitalsY - 12);
+        ctx.lineTo(vitalsX + 8, vitalsY + 6);
+        ctx.stroke();
+      } else if (mode === 'deflect') {
+        // Broken Arrow on Scapula
+        ctx.strokeStyle = '#e11d48';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(deerX - 14, vitalsY - 14);
+        ctx.lineTo(deerX - 6, vitalsY - 6);
+        ctx.moveTo(deerX - 6, vitalsY - 6);
+        ctx.lineTo(deerX, vitalsY - 16);
+        ctx.stroke();
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       7. FIELD CALLS & RUT ACTIONS
+       -------------------------------------------------------------------------- */
+    function rattleAntlers() {
+      showToast('Rattling Tines', 'The clash of antler bone echoes down the hardwood hollow.');
+      if (Math.random() > 0.35) {
+        const bonusBuck = generateGameAnimal('Whitetail', 'Aggressive 10-Point Dominant Buck', 225, 158, 2);
+        state.encounters.unshift(bonusBuck);
+        state.selectedEncounterId = bonusBuck.id;
+        showToast('Buck Responded!', 'A dominant 10-point bristled into Lane B looking for a fight.');
+        updateUI();
+      }
+    }
+
+    function gruntTubeCall() {
+      showToast('Buck Grunt', 'A guttural tending grunt stops cruisers in their tracks.');
+      const t = getActiveTarget();
+      if (t) {
+        t.posture = 'Stopped Broadside in Lane';
+        t.alertLevel = 'Broadside Look';
+        renderActiveTargetBrief();
+        showToast('Broadside Stopped', `${t.name} paused broadside in Lane ${state.selectedLane}!`);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       8. CREEK BED SCOUTING & ARTIFACT RECOVERY
+       -------------------------------------------------------------------------- */
+    function scoutLocation(type) {
+      showToast('Scouting Horizon', 'Probing ancient gravel beds and exposed bluff cuts...');
+
+      let chance = 0.65;
+      if (hasUpgrade('g_screen')) chance = 0.90;
+
+      if (Math.random() <= chance) {
+        // Select an unrecovered artifact or duplicate trade specimen
+        const unrecovered = AUTHENTIC_ARTIFACTS.filter(a => !state.discoveredArtifacts.some(d => d.id === a.id));
+        const art = unrecovered.length > 0 ? unrecovered[Math.floor(Math.random() * unrecovered.length)] : AUTHENTIC_ARTIFACTS[Math.floor(Math.random() * AUTHENTIC_ARTIFACTS.length)];
+
+        state.discoveredArtifacts.push(art);
+        state.stats.artifactsFound++;
+
+        // Add to Vault for auction
+        state.vaultItems.unshift({
+          id: 'VAULT-ART-' + Date.now(),
+          name: art.name,
+          category: 'Ancient Artifact',
+          period: art.period,
+          baseVal: art.trueVal,
+          quality: 'Flawless Prehistoric Lithic',
+          stars: '★★★'
+        });
+
+        showToast('Artifact Unearthed!', `Discovered: ${art.name} (${art.period})! Appraised at $${art.trueVal}.`);
+      } else {
+        showToast('Nothing Uncovered', 'Only river chert nodules and crinoid fossil stems.');
+      }
+
+      renderArtifactsVault();
+      renderStats();
+      updateUI();
+    }
+
+    function renderArtifactsVault() {
+      const grid = document.getElementById('artifacts-grid');
+      document.getElementById('relic-finds-badge').textContent = `${state.discoveredArtifacts.length} Recovered`;
+
+      if (state.discoveredArtifacts.length === 0) {
+        grid.innerHTML = `<p class="col-span-full text-xs text-[#705e4d] italic p-3">No ancient points recovered yet. Probe limestone creek washouts and blowdown roots.</p>`;
+        return;
+      }
+
+      grid.innerHTML = state.discoveredArtifacts.map(a => `
+        <div class="cabin-inset p-2.5 rounded border border-[#3d3126] hover:border-amber-600 flex flex-col justify-between transition">
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1">
+              <span class="font-title font-bold text-amber-200">${a.name}</span>
+              <span class="text-emerald-400 font-bold font-mono-ledger">$${a.trueVal}</span>
+            </div>
+            <p class="text-[10px] text-amber-400 font-title uppercase mb-1">${a.period}</p>
+            <p class="text-[11px] text-[#a89988]">${a.desc}</p>
+          </div>
+          <div class="mt-2 pt-2 border-t border-[#2b2016] flex justify-between items-center text-[10px] text-[#705e4d]">
+            <span>Found in: ${a.loc}</span>
+            <span class="text-emerald-400 font-bold">Authenticated</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* --------------------------------------------------------------------------
+       9. BUCK POLE & TROPHY FIELD DRESSING
+       -------------------------------------------------------------------------- */
+    function renderFieldDress() {
+      const qList = document.getElementById('quarry-list');
+      document.getElementById('pole-count-label').textContent = `${state.quarry.length} Hung`;
+      document.getElementById('quarry-count-badge').textContent = state.quarry.length;
+
+      if (state.quarry.length === 0) {
+        qList.innerHTML = `<p class="text-xs text-[#705e4d] italic p-3">Buck pole empty. Make a clean release from your treestand.</p>`;
+        document.getElementById('dress-quarry-name').textContent = 'Buck Pole Empty';
+        document.getElementById('dress-quarry-sub').textContent = 'Loose an arrow from your treestand to harvest game.';
+        document.getElementById('dress-purity-label').textContent = 'Cape Grade: --';
+        document.getElementById('harvest-options-grid').innerHTML = '';
+        renderVaultItems();
+        return;
+      }
+
+      qList.innerHTML = state.quarry.map(q => `
+        <div onclick="selectQuarryAnimal('${q.id}')" class="cabin-inset p-2.5 rounded border ${state.selectedQuarryId === q.id ? 'border-[#d4a359] bg-[#271d14]' : 'border-[#2b2016]'} cursor-pointer transition">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-title font-bold text-amber-200">${q.name}</span>
+            <span class="text-[10px] text-amber-400 font-bold">${q.bcScore}" B&C</span>
+          </div>
+          <div class="flex justify-between text-[11px] text-[#8a7b6a] mt-1">
+            <span>${q.species} (${q.weight} lbs)</span>
+            <span>${q.harvested.length}/4 Processed</span>
+          </div>
+        </div>
+      `).join('');
+
+      renderDressHarvestOptions();
+      renderVaultItems();
+    }
+
+    function selectQuarryAnimal(id) {
+      state.selectedQuarryId = id;
+      renderFieldDress();
+    }
+
+    function renderDressHarvestOptions() {
+      const q = state.quarry.find(x => x.id === state.selectedQuarryId) || state.quarry[0];
+      if (!q) return;
+
+      state.selectedQuarryId = q.id;
+      document.getElementById('dress-quarry-name').textContent = q.name;
+      document.getElementById('dress-quarry-sub').textContent = `${q.species} — ${q.weight} lbs • ${q.bcScore}" Gross Boone & Crockett`;
+      document.getElementById('dress-purity-label').textContent = `Cape Purity: ${q.purity}%`;
+
+      const options = [
+        {
+          key: 'antlers',
+          name: `${q.bcScore}" Boone & Crockett Antler Mount`,
+          baseVal: Math.round(q.bcScore * 2.8),
+          desc: 'Symmetrical main beams and polished tines for British trophy collectors.'
+        },
+        {
+          key: 'cape',
+          name: 'Winter Buckskin Cape (Unblemished Fur)',
+          baseVal: Math.round(180 * (q.purity / 100)),
+          desc: 'Salt-cured hide for St. Louis fur merchants.'
+        },
+        {
+          key: 'skull',
+          name: 'European Beetle-Cleaned Skull Mount',
+          baseVal: 140,
+          desc: 'Bleached white cranial bone trophy.'
+        },
+        {
+          key: 'ivories',
+          name: 'Polished Canine Ivories (Buglers)',
+          baseVal: 240,
+          desc: 'Smooth prehistoric canine teeth favored for signet ring jewelry.',
+          condition: q.species === 'Wapiti Elk' || q.bcScore > 160
+        }
+      ];
+
+      const grid = document.getElementById('harvest-options-grid');
+      grid.innerHTML = options.map(opt => {
+        if (opt.condition === false) return '';
+        const done = q.harvested.includes(opt.key);
+        const val = opt.baseVal;
+
+        return `
+          <div class="cabin-inset p-2.5 rounded border ${done ? 'border-[#1e150f] opacity-40' : 'border-[#3d3126] hover:border-amber-600'} flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-title font-bold text-amber-200">${opt.name}</span>
+                <span class="text-emerald-400 font-mono-ledger font-bold">$${val}</span>
+              </div>
+              <p class="text-[10px] text-[#8a7b6a] mt-1">${opt.desc}</p>
+            </div>
+            <button onclick="dressAnimalTrophy('${q.id}', '${opt.key}', '${opt.name}', ${val})" ${done ? 'disabled' : ''} class="mt-2 py-1.5 rounded bg-[#2b1f13] border border-[#6b4e2d] text-amber-300 font-title text-xs hover:border-amber-400 disabled:opacity-40">
+              ${done ? 'Harvested' : 'Cape & Salting'}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function dressAnimalTrophy(quarryId, key, name, val) {
+      const q = state.quarry.find(x => x.id === quarryId);
+      if (!q || q.harvested.includes(key)) return;
+
+      q.harvested.push(key);
+      if (key === 'ivories') state.stats.ivories += 2;
+
+      const rarityLevel = q.bcScore >= 160 ? 3 : (q.purity >= 90 ? 2 : 1);
+      state.vaultItems.unshift({
+        id: 'VAULT-GAME-' + Date.now() + '-' + Math.floor(Math.random() * 999),
+        name: `${name} (${q.name})`,
+        category: key === 'antlers' ? 'Trophy' : (key === 'cape' ? 'Furs' : 'Relic'),
+        baseVal: val,
+        purity: q.purity,
+        rarityTier: rarityLevel,
+        stars: rarityLevel === 3 ? '★★★' : (rarityLevel === 2 ? '★★☆' : '★☆☆')
+      });
+
+      showToast('Trophy Salt-Cured', `${name} stashed in camp cache vault.`);
+
+      if (q.harvested.length >= 3) {
+        state.quarry = state.quarry.filter(x => x.id !== q.id);
+        state.selectedQuarryId = state.quarry.length > 0 ? state.quarry[0].id : null;
+      }
+
+      renderFieldDress();
+      renderStats();
+    }
+
+    function renderVaultItems() {
+      const container = document.getElementById('vault-items-container');
+      const badge = document.getElementById('vault-count-badge');
+      if (badge) badge.textContent = `${state.vaultItems.length} items`;
+
+      if (state.vaultItems.length === 0) {
+        container.innerHTML = `<span class="text-xs text-[#705e4d] italic">Cache vault empty. Cape buck pole game or discover creek artifacts.</span>`;
+        return;
+      }
+
+      const sorted = getSortedVaultItems();
+      container.innerHTML = sorted.map(item => `
+        <div class="px-2 py-1 rounded bg-[#211811] border border-[#4d3926] text-xs flex items-center gap-1.5">
+          <span class="text-amber-200 font-title">${item.name}</span>
+          <span class="text-emerald-400 font-mono-ledger font-bold">($${item.baseVal})</span>
+          <span class="text-amber-400 font-bold">${item.stars || '★★☆'}</span>
+        </div>
+      `).join('');
+    }
+
+    /* --------------------------------------------------------------------------
+       10. SORTING MECHANISM & MULTI-PEDESTAL AUCTION ENGINE
+       -------------------------------------------------------------------------- */
+    function setSortMode(criteria) {
+      state.sortCriteria = criteria;
+      const select = document.getElementById('vault-sort-select');
+      if (select) select.value = criteria;
+
+      // Update chips visual styles
+      document.querySelectorAll('.sort-chip').forEach(btn => {
+        btn.classList.remove('border-[#d4a359]', 'text-amber-200', 'font-bold', 'bg-[#2b1f13]');
+        btn.classList.add('border-[#3d2e20]', 'text-[#8a7b6a]', 'bg-[#18130e]');
+      });
+      const activeBtn = document.getElementById('sort-btn-' + criteria);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-[#3d2e20]', 'text-[#8a7b6a]', 'bg-[#18130e]');
+        activeBtn.classList.add('border-[#d4a359]', 'text-amber-200', 'font-bold', 'bg-[#2b1f13]');
+      }
+
+      const labelMap = {
+        val_desc: 'Value: High ➔ Low',
+        val_asc: 'Value: Low ➔ High',
+        rarity: 'Tier / Rarity ★',
+        category: 'Category Grouping',
+        name: 'Alphabetical (A ➔ Z)'
+      };
+      document.getElementById('active-sort-label').textContent = labelMap[criteria] || criteria;
+
+      renderAuctionWall();
+      renderVaultItems();
+    }
+
+    function changeSortCriteria(val) {
+      setSortMode(val);
+    }
+
+    function getSortedVaultItems() {
+      const copy = [...state.vaultItems];
+      switch (state.sortCriteria) {
+        case 'val_asc':
+          return copy.sort((a, b) => a.baseVal - b.baseVal);
+        case 'rarity':
+          return copy.sort((a, b) => (b.rarityTier || 2) - (a.rarityTier || 2));
+        case 'category':
+          return copy.sort((a, b) => a.category.localeCompare(b.category));
+        case 'name':
+          return copy.sort((a, b) => a.name.localeCompare(b.name));
+        case 'val_desc':
+        default:
+          return copy.sort((a, b) => b.baseVal - a.baseVal);
+      }
+    }
+
+    // AUTO-FILL 3 SLOTS
+    function autoFillAuctionSlots() {
+      if (state.activeAuction) {
+        showToast('Auction Running', 'Wait for active floor bidding to conclude before auto-filling.');
+        return;
+      }
+
+      const emptySlots = state.pedestals.filter(p => !p.item);
+      if (emptySlots.length === 0) {
+        showToast('Slots Full', 'All 3 pedestals already hold auction lots. Click Clear to reset.');
+        return;
+      }
+      if (state.vaultItems.length === 0) {
+        showToast('Pack Empty', 'No wares available in your Cache Vault.');
+        return;
+      }
+
+      // Sort wares by highest appraised value
+      const sortedWares = [...state.vaultItems].sort((a, b) => b.baseVal - a.baseVal);
+      let filledCount = 0;
+
+      for (let p of state.pedestals) {
+        if (!p.item && sortedWares.length > 0) {
+          const topItem = sortedWares.shift();
+          // Remove from vault
+          state.vaultItems = state.vaultItems.filter(i => i.id !== topItem.id);
+
+          // Populate pedestal with calculated optimal reserve (82% of appraisal)
+          p.item = topItem;
+          p.reserve = Math.round(topItem.baseVal * 0.82);
+          p.status = 'ready';
+          filledCount++;
+        }
+      }
+
+      showToast('⚡ Auto-Fill Complete', `Loaded top ${filledCount} highest-value lot(s) with optimal 82% reserves.`);
+      selectPedestalSlot(0);
+      renderAuctionWall();
+      renderVaultItems();
+    }
+
+    function clearAllAuctionSlots() {
+      if (state.activeAuction) {
+        showToast('Auction Running', 'Cannot clear pedestals during active bidding.');
+        return;
+      }
+
+      let returned = 0;
+      state.pedestals.forEach(p => {
+        if (p.item) {
+          state.vaultItems.unshift(p.item);
+          p.item = null;
+          p.reserve = 0;
+          p.status = 'empty';
+          returned++;
+        }
+      });
+
+      state.selectedAuctionItemId = null;
+      showToast('Pedestals Cleared', `${returned} lot(s) returned to your Cache Vault.`);
+      renderAuctionWall();
+      renderVaultItems();
+    }
+
+    function selectPedestalSlot(slotIdx) {
+      state.focusedPedestalSlot = slotIdx;
+      const p = state.pedestals[slotIdx];
+      if (p && p.item) {
+        const slider = document.getElementById('auction-reserve-slider');
+        slider.min = Math.round(p.item.baseVal * 0.4);
+        slider.max = Math.round(p.item.baseVal * 1.8);
+        slider.value = p.reserve || Math.round(p.item.baseVal * 0.82);
+        updateAuctionReservePrice(slider.value);
+      }
+      renderPedestals();
+      renderActiveLotBanner();
+    }
+
+    function renderPedestals() {
+      const container = document.getElementById('pedestals-container');
+      if (!container) return;
+
+      container.innerHTML = state.pedestals.map((p, idx) => {
+        const isFocused = state.focusedPedestalSlot === idx;
+        const hasItem = p.item !== null;
+
+        return `
+          <div onclick="selectPedestalSlot(${idx})" class="pedestal-slot p-2 rounded cursor-pointer ${isFocused ? 'active-pedestal' : ''}">
+            <div class="flex justify-between items-center text-[10px] mb-1">
+              <span class="font-title text-amber-400 font-bold uppercase">Pedestal ${idx + 1}</span>
+              <span class="px-1.5 py-0.2 rounded text-[9px] ${hasItem ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-zinc-900 text-zinc-500'}">
+                ${hasItem ? (p.status === 'sold' ? 'SOLD' : 'READY') : 'VACANT'}
+              </span>
+            </div>
+            ${hasItem ? `
+              <p class="font-title font-bold text-amber-200 text-xs truncate">${p.item.name}</p>
+              <div class="flex justify-between text-[11px] mt-1 text-[#8a7b6a]">
+                <span>Appr: <span class="text-zinc-300 font-mono-ledger">$${p.item.baseVal}</span></span>
+                <span class="text-emerald-400 font-bold font-mono-ledger">Res: $${p.reserve}</span>
+              </div>
+            ` : `
+              <div class="py-2 text-center text-[11px] text-[#705e4d] italic">
+                Empty Pedestal
+              </div>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAuctionWall() {
+      renderPedestals();
+      const list = document.getElementById('auction-vault-list');
+      document.getElementById('auction-vault-count').textContent = `${state.vaultItems.length} Lots in Pack`;
+
+      if (state.vaultItems.length === 0) {
+        list.innerHTML = `<p class="text-xs text-[#705e4d] italic p-3">Cache vault empty. Cape buck pole game or purchase river bargains to sell.</p>`;
+        return;
+      }
+
+      const sorted = getSortedVaultItems();
+      list.innerHTML = sorted.map(item => `
+        <div onclick="mountItemToPedestal('${item.id}')" class="cabin-inset p-2 rounded border border-[#2b2016] hover:border-amber-600 cursor-pointer transition flex justify-between items-center text-xs">
+          <div>
+            <p class="font-title font-bold text-amber-200">${item.name}</p>
+            <p class="text-[10px] text-[#8a7b6a]">${item.category} • <span class="text-amber-400">${item.stars || '★★☆'}</span></p>
+          </div>
+          <div class="text-right">
+            <span class="text-emerald-400 font-mono-ledger font-bold">$${item.baseVal}</span>
+            <span class="block text-[9px] text-[#a89988]">Click to Mount</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function mountItemToPedestal(itemId) {
+      if (state.activeAuction) {
+        showToast('Auction Running', 'Conclude active floor bidding before mounting a new lot.');
+        return;
+      }
+
+      const item = state.vaultItems.find(i => i.id === itemId);
+      if (!item) return;
+
+      // Find target slot: either currently focused if empty, or first empty
+      let targetPedestal = state.pedestals[state.focusedPedestalSlot];
+      if (targetPedestal.item) {
+        targetPedestal = state.pedestals.find(p => !p.item) || targetPedestal;
+      }
+
+      // If replacing an existing item, return old to vault
+      if (targetPedestal.item) {
+        state.vaultItems.unshift(targetPedestal.item);
+      }
+
+      state.vaultItems = state.vaultItems.filter(i => i.id !== item.id);
+      targetPedestal.item = item;
+      targetPedestal.reserve = Math.round(item.baseVal * 0.82);
+      targetPedestal.status = 'ready';
+
+      selectPedestalSlot(targetPedestal.slot);
+      showToast('Lot Mounted', `Placed "${item.name}" on Pedestal ${targetPedestal.slot + 1}.`);
+      renderAuctionWall();
+      renderVaultItems();
+    }
+
+    function updateAuctionReservePrice(val) {
+      state.auctionReserve = parseInt(val);
+      document.getElementById('auction-reserve-display').textContent = `$${state.auctionReserve}`;
+
+      const p = state.pedestals[state.focusedPedestalSlot];
+      if (p && p.item) {
+        p.reserve = state.auctionReserve;
+        renderPedestals();
+      }
+    }
+
+    function openTradingPostAuction() {
+      if (state.activeAuction) return;
+
+      const p = state.pedestals[state.focusedPedestalSlot];
+      if (!p || !p.item) {
+        showToast('Empty Pedestal', 'Mount an item or use Auto-Fill to populate Pedestal ' + (state.focusedPedestalSlot + 1));
+        return;
+      }
+
+      launchSinglePedestalAuction(p);
+    }
+
+    function launchSinglePedestalAuction(pedestal) {
+      const item = pedestal.item;
+      state.activeAuction = {
+        pedestalSlot: pedestal.slot,
+        item: item,
+        currentBid: pedestal.reserve,
+        highBidder: 'Floor Opening Call',
+        round: 1,
+        maxRounds: 5
+      };
+
+      document.getElementById('auction-status-tag').textContent = `PEDESTAL ${pedestal.slot + 1} ACTIVE`;
+      document.getElementById('auction-status-tag').className = 'text-[10px] px-2 py-0.5 rounded bg-emerald-950 border border-emerald-700 text-emerald-300 font-title animate-pulse';
+      document.getElementById('btn-strike-gavel').disabled = false;
+
+      renderActiveLotBanner();
+      addTradingPostBanter(`Wooden gavel clatters! Bidding opens on Pedestal ${pedestal.slot + 1}: "${item.name}" at $${pedestal.reserve}!`);
+
+      if (state.auctionTimer) clearInterval(state.auctionTimer);
+      state.auctionTimer = setInterval(tradingPostAuctionTick, 1800);
+    }
+
+    // RUN ALL 3 PEDESTALS SEQUENTIALLY
+    function runAllAuctionPedestals() {
+      if (state.activeAuction) {
+        showToast('Auction Running', 'Floor is currently active.');
+        return;
+      }
+
+      const readyPedestals = state.pedestals.filter(p => p.item !== null);
+      if (readyPedestals.length === 0) {
+        showToast('No Ready Slots', 'Click Auto-Fill Slots first to load 3 wares.');
+        return;
+      }
+
+      state.isMultiRunning = true;
+      document.getElementById('multi-run-status').textContent = `Running batch auction of ${readyPedestals.length} pedestals...`;
+      selectPedestalSlot(readyPedestals[0].slot);
+      launchSinglePedestalAuction(readyPedestals[0]);
+    }
+
+    function tradingPostAuctionTick() {
+      if (!state.activeAuction) {
+        clearInterval(state.auctionTimer);
+        return;
+      }
+
+      const lot = state.activeAuction;
+      const bidders = [
+        { name: 'Dr. Alistair Finch (Smithsonian)', bias: 'Ancient Artifact', max: 2800, quote: "An unparalleled prehistoric fluting technique! The Smithsonian must have this!" },
+        { name: 'Lord Dunmore (British Big Game)', bias: 'Trophy', max: 2400, quote: "Splendid symmetry! This rack shall hang in Dunmore Hall!" },
+        { name: 'Madame Beauchamp (St. Louis Furs)', bias: 'Furs', max: 1600, quote: "Unblemished winter buckskin with zero bile staining. Superb dress!" },
+        { name: 'Trapper Jed (Provisions)', bias: 'Relic', max: 1100, quote: "Genuine carved river bone. Fine piece for trading downriver." }
+      ];
+
+      if (lot.round <= lot.maxRounds) {
+        const eligible = bidders.filter(b => b.bias === lot.item.category || Math.random() > 0.35);
+        const bidder = eligible[Math.floor(Math.random() * eligible.length)];
+
+        const raise = Math.floor(Math.random() * 85) + 35;
+        const newBid = lot.currentBid + raise;
+
+        if (bidder && newBid <= bidder.max && bidder.name !== lot.highBidder) {
+          lot.currentBid = newBid;
+          lot.highBidder = bidder.name;
+          addTradingPostBanter(`${bidder.name} raises to $${lot.currentBid}! "${bidder.quote}"`);
+        } else {
+          addTradingPostBanter(`Auctioneer calls: "$${lot.currentBid} going once, going twice..."`);
+        }
+
+        lot.round++;
+        renderActiveLotBanner();
+      } else {
+        finalizeAuctionSale();
+      }
+    }
+
+    function finalizeAuctionSale() {
+      clearInterval(state.auctionTimer);
+      state.auctionTimer = null;
+      if (!state.activeAuction) return;
+
+      const lot = state.activeAuction;
+      const payout = lot.currentBid;
+      state.dollars += payout;
+      state.stats.lifetimeCash += payout;
+      state.stats.arbitrageProfit += payout;
+
+      addTradingPostBanter(`[SOLD] ⚡ The gavel cracks down on Pedestal ${lot.pedestalSlot + 1}! "${lot.item.name}" knocked down to ${lot.highBidder} for $${payout}!`);
+      showToast('Auction Complete!', `"${lot.item.name}" sold to ${lot.highBidder} for $${payout}.`);
+
+      // Mark slot empty
+      const pedestal = state.pedestals[lot.pedestalSlot];
+      if (pedestal) {
+        pedestal.item = null;
+        pedestal.reserve = 0;
+        pedestal.status = 'empty';
+      }
+
+      state.activeAuction = null;
+      document.getElementById('auction-status-tag').textContent = 'PARLOR QUIET';
+      document.getElementById('auction-status-tag').className = 'text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-400 font-title';
+      document.getElementById('btn-strike-gavel').disabled = true;
+
+      renderPedestals();
+      renderActiveLotBanner();
+      updateUI();
+      renderStats();
+
+      // If running multi-pedestals, advance to the next filled pedestal
+      if (state.isMultiRunning) {
+        const nextReady = state.pedestals.find(p => p.item !== null);
+        if (nextReady) {
+          setTimeout(() => {
+            selectPedestalSlot(nextReady.slot);
+            launchSinglePedestalAuction(nextReady);
+          }, 1200);
+        } else {
+          state.isMultiRunning = false;
+          document.getElementById('multi-run-status').textContent = 'All staged pedestals completed successfully!';
+          showToast('Batch Complete', 'All staged auction pedestals were sold.');
+        }
+      }
+    }
+
+    function renderActiveLotBanner() {
+      const banner = document.getElementById('active-lot-banner');
+      const p = state.pedestals[state.focusedPedestalSlot];
+
+      if (state.activeAuction) {
+        const lot = state.activeAuction;
+        banner.innerHTML = `
+          <div class="flex justify-between items-start mb-1.5">
+            <div>
+              <span class="text-[9px] bg-amber-950 text-amber-300 px-1 rounded border border-amber-800 font-title">Pedestal ${lot.pedestalSlot + 1} Under Gavel</span>
+              <h4 class="font-title font-bold text-amber-200 text-sm sm:text-base mt-0.5">${lot.item.name}</h4>
+              <span class="text-xs text-[#8a7b6a]">${lot.item.category} • Quality: ${lot.item.stars || '★★★'}</span>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-[#2e1f13] text-amber-300 border border-[#785b37] font-title">Round ${lot.round}/${lot.maxRounds}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs pt-1.5 border-t border-[#2b2016]">
+            <div>
+              <span class="text-[#7b6b5a] block text-[10px]">High Bid:</span>
+              <span class="text-emerald-400 font-mono-ledger font-bold text-base sm:text-lg">$${lot.currentBid}</span>
+            </div>
+            <div>
+              <span class="text-[#7b6b5a] block text-[10px]">Current Buyer:</span>
+              <span class="text-amber-200 font-title font-bold">${lot.highBidder}</span>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (p && p.item) {
+        banner.innerHTML = `
+          <div class="flex justify-between items-start mb-1">
+            <div>
+              <span class="text-[9px] bg-[#261c13] text-amber-300 px-1.5 py-0.2 rounded border border-[#543d28] font-title">Mounted on Pedestal ${p.slot + 1}</span>
+              <h4 class="font-title font-bold text-amber-200 text-sm mt-0.5">${p.item.name}</h4>
+              <span class="text-[11px] text-[#8a7b6a]">${p.item.category} • Appraised: $${p.item.baseVal}</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] text-[#7b6b5a] block">Current Reserve:</span>
+              <span class="text-emerald-400 font-mono-ledger font-bold text-sm">$${p.reserve}</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-[#cfc5b8] italic">Click "GAVEL ACTIVE PEDESTAL" or "RUN ALL PEDESTALS" to initiate bidding.</p>
+        `;
+      } else {
+        banner.innerHTML = `<p class="text-xs text-[#705e4d] italic text-center py-2">Pedestal ${state.focusedPedestalSlot + 1} is vacant. Select an item from your pack or click ⚡ Auto-Fill Slots.</p>`;
+      }
+    }
+
+    function finalizeAuctionSale() {
+      clearInterval(state.auctionTimer);
+      state.auctionTimer = null;
+      if (!state.activeAuction) return;
+
+      const lot = state.activeAuction;
+      const payout = lot.currentBid;
+      state.dollars += payout;
+      state.stats.lifetimeCash += payout;
+      state.stats.arbitrageProfit += payout;
+
+      addTradingPostBanter(`[SOLD] ⚡ The gavel cracks down! "${lot.item.name}" knocked down to ${lot.highBidder} for $${payout}!`);
+      showToast('Auction Complete!', `"${lot.item.name}" sold to ${lot.highBidder} for $${payout}.`);
+
+      state.activeAuction = null;
+      document.getElementById('auction-status-tag').textContent = 'PARLOR QUIET';
+      document.getElementById('auction-status-tag').className = 'text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-400 font-title';
+      document.getElementById('btn-strike-gavel').disabled = true;
+
+      renderActiveLotBanner();
+      updateUI();
+      renderStats();
+    }
+
+    function renderActiveLotBanner() {
+      const banner = document.getElementById('active-lot-banner');
+      if (!state.activeAuction) {
+        banner.innerHTML = `<p class="text-xs text-[#705e4d] italic text-center py-3">No lot mounted on the oak block. Choose an artifact or cape from your vault.</p>`;
+        return;
+      }
+
+      const lot = state.activeAuction;
+      banner.innerHTML = `
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <h4 class="font-title font-bold text-amber-200 text-sm sm:text-base">${lot.item.name}</h4>
+            <span class="text-xs text-[#8a7b6a]">${lot.item.category} • Quality: ${lot.item.stars}</span>
+          </div>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-[#2e1f13] text-amber-300 border border-[#785b37] font-title">Round ${lot.round}/${lot.maxRounds}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-[#2b2016]">
+          <div>
+            <span class="text-[#7b6b5a] block text-[10px]">High Bid:</span>
+            <span class="text-emerald-400 font-mono-ledger font-bold text-base sm:text-lg">$${lot.currentBid}</span>
+          </div>
+          <div>
+            <span class="text-[#7b6b5a] block text-[10px]">Calling Factor:</span>
+            <span class="text-amber-200 font-title font-bold">${lot.highBidder}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function addTradingPostBanter(msg) {
+      const feed = document.getElementById('auction-banter-feed');
+      const p = document.createElement('p');
+      p.className = 'py-0.5 border-b border-[#241a12] text-[#cfc5b8]';
+      p.innerHTML = `<span class="text-amber-400 font-bold">🏛</span> ${msg}`;
+      feed.insertBefore(p, feed.firstChild);
+    }
+
+    /* --------------------------------------------------------------------------
+       11. RIVER DREDGE BARGAINS (1-5% DEEP ARBITRAGE)
+       -------------------------------------------------------------------------- */
+    function renderBargains() {
+      const grid = document.getElementById('bargains-grid');
+      document.getElementById('bargain-countdown').textContent = `${state.bargainCountdown} Hunts`;
+
+      grid.innerHTML = state.bargains.map(b => `
+        <div class="cabin-inset p-3 rounded border border-[#3d3126] hover:border-amber-600 flex flex-col justify-between transition">
+          <div>
+            <div class="flex justify-between items-center gap-2 mb-1.5">
+              <span class="text-[9px] font-title font-bold text-rose-300 bg-rose-950 px-1.5 py-0.5 rounded border border-rose-800">
+                ${b.discountPct}% DISCOUNT
+              </span>
+              <span class="text-[10px] text-amber-400 font-title uppercase">${b.category}</span>
+            </div>
+            <h4 class="font-title font-bold text-amber-200 text-xs sm:text-sm mb-1">${b.title}</h4>
+            <p class="text-[11px] text-[#8a7b6a] italic mb-2">Uninspected dredge recovery from river gravel flats.</p>
+
+            <div class="space-y-1 text-xs cabin-panel p-2 rounded border border-[#2b2016] mb-3">
+              <div class="flex justify-between text-[#7b6b5a]">
+                <span>Appraised Value:</span>
+                <span class="line-through text-zinc-400 font-mono-ledger">$${b.trueAppraisal}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-amber-300 font-bold">Frontier Price:</span>
+                <span class="text-emerald-400 font-mono-ledger font-bold text-sm">$${b.price}</span>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="buyRiverBargain('${b.id}')" class="w-full py-1.5 bg-gradient-to-r from-[#442c17] to-[#1e1309] border border-[#d4a359] hover:brightness-110 text-amber-200 font-title text-xs font-bold rounded transition">
+            Acquire Bundle ($${b.price})
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function buyRiverBargain(id) {
+      const b = state.bargains.find(x => x.id === id);
+      if (!b) return;
+
+      if (state.dollars < b.price) {
+        showToast('Insufficient Cash', `You need $${b.price} frontier dollars.`);
+        return;
+      }
+
+      state.dollars -= b.price;
+
+      state.vaultItems.unshift({
+        id: 'VAULT-BARGAIN-' + Date.now(),
+        name: b.title,
+        category: b.category,
+        baseVal: b.trueAppraisal,
+        purity: 95,
+        stars: '★★★'
+      });
+
+      state.bargains = state.bargains.filter(x => x.id !== id);
+      showToast('Bundle Secured!', `Acquired for $${b.price} (Appraised at $${b.trueAppraisal}). Stashed in vault.`);
+
+      renderBargains();
+      renderVaultItems();
+      updateUI();
+    }
+
+    function bribeRiverTrader() {
+      if (state.dollars < 25) {
+        showToast('Insufficient Cash', '$25 needed to bribe the flatboat scout.');
+        return;
+      }
+      state.dollars -= 25;
+      populateRiverBargains();
+      showToast('Trader Tipped', 'Fresh uninspected gravel dredge bundles brought ashore.');
+      updateUI();
+    }
+
+    /* --------------------------------------------------------------------------
+       12. BOWYER'S WORKBENCH & GEAR
+       -------------------------------------------------------------------------- */
+    function renderBowyerShop() {
+      const bList = document.getElementById('bows-list');
+      bList.innerHTML = TRADITIONAL_BOWS.map(bow => `
+        <div class="cabin-inset p-2.5 rounded border border-[#2b2016] flex items-center justify-between">
+          <div class="pr-2">
+            <p class="font-title font-bold text-amber-200 text-xs sm:text-sm">${bow.name}</p>
+            <p class="text-[11px] text-[#8a7b6a]">${bow.desc} • <span class="text-amber-400 font-bold">${bow.fps} FPS</span></p>
+          </div>
+          <div>
+            ${bow.owned ? (
+              state.activeBowId === bow.id ? `
+                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-title font-bold">Equipped</span>
+              ` : `
+                <button onclick="equipTraditionalBow('${bow.id}')" class="px-2.5 py-1 rounded bg-[#2b1f13] border border-[#6b4e2d] text-amber-200 text-xs font-title hover:brightness-110">
+                  Equip
+                </button>
+              `
+            ) : `
+              <button onclick="buyTraditionalBow('${bow.id}', ${bow.cost})" class="px-2.5 py-1 rounded bg-[#3d2716] border border-[#d4a359] text-amber-200 text-xs font-title font-bold hover:brightness-110">
+                $${bow.cost}
+              </button>
+            `}
+          </div>
+        </div>
+      `).join('');
+
+      const gList = document.getElementById('gear-list');
+      gList.innerHTML = FIELD_GEAR.map(gear => `
+        <div class="cabin-inset p-2.5 rounded border border-[#2b2016] flex items-center justify-between">
+          <div class="pr-2">
+            <p class="font-title font-bold text-amber-200 text-xs sm:text-sm">${gear.name}</p>
+            <p class="text-[11px] text-[#8a7b6a]">${gear.desc}</p>
+          </div>
+          <div>
+            ${gear.owned ? `
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-title font-bold">In Pack</span>
+            ` : `
+              <button onclick="buyFieldGear('${gear.id}', ${gear.cost})" class="px-2.5 py-1 rounded bg-[#3d2716] border border-[#d4a359] text-amber-200 text-xs font-title font-bold hover:brightness-110">
+                $${gear.cost}
+              </button>
+            `}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function equipTraditionalBow(id) {
+      state.activeBowId = id;
+      const bow = getActiveBow();
+      document.getElementById('rig-specs-tag').textContent = `${bow.name} • 540gr Cedar`;
+      showToast('Rig Strung', `Strung ${bow.name} for the treestand perch.`);
+      renderBowyerShop();
+      updateBallisticPhysics();
+    }
+
+    function buyTraditionalBow(id, cost) {
+      if (state.dollars < cost) {
+        showToast('Insufficient Cash', 'You need more dollars for this hand-tillered bow.');
+        return;
+      }
+      state.dollars -= cost;
+      const b = TRADITIONAL_BOWS.find(x => x.id === id);
+      if (b) b.owned = true;
+      state.activeBowId = id;
+      showToast('Bow Tillered', `Purchased and strung ${b.name}!`);
+      renderBowyerShop();
+      updateBallisticPhysics();
+      updateUI();
+    }
+
+    function buyFieldGear(id, cost) {
+      if (state.dollars < cost) {
+        showToast('Insufficient Cash', 'Cannot afford this woodsman tool.');
+        return;
+      }
+      state.dollars -= cost;
+      const g = FIELD_GEAR.find(x => x.id === id);
+      if (g) g.owned = true;
+      showToast('Tool Acquired', `${g.name} added to expedition gear.`);
+      renderBowyerShop();
+      updateBallisticPhysics();
+      updateUI();
+    }
+
+    function hasUpgrade(id) {
+      const g = FIELD_GEAR.find(x => x.id === id);
+      return g ? g.owned : false;
+    }
+
+    /* --------------------------------------------------------------------------
+       13. POST-SHOT REPORT MODAL
+       -------------------------------------------------------------------------- */
+    function openPostShotModal(target, hitType, narrative, distYards, ke, purity) {
+      document.getElementById('ps-target-name').textContent = target.name;
+      document.getElementById('ps-target-stats').textContent = `Boone & Crockett: ${target.bcScore}" • ${target.weightLbs} lbs • ${target.species}`;
+      document.getElementById('ps-narrative-text').textContent = narrative;
+
+      document.getElementById('ps-dist').textContent = `${distYards.toFixed(1)} yds`;
+      document.getElementById('ps-ke').textContent = `${ke} ft-lbs`;
+      document.getElementById('ps-purity').textContent = `${purity}%`;
+      document.getElementById('ps-score').textContent = `${target.bcScore}" B&C`;
+
+      document.getElementById('post-shot-modal').classList.remove('hidden');
+    }
+
+    function closePostShotModal() {
+      document.getElementById('post-shot-modal').classList.add('hidden');
+    }
+
+    function transferToBuckPole() {
+      closePostShotModal();
+      switchTab('fielddress');
+    }
+
+    /* --------------------------------------------------------------------------
+       14. CAREER RECORD & STATS
+       -------------------------------------------------------------------------- */
+    function updateCareerRank() {
+      if (state.stats.recordScore >= 170 && state.stats.lifetimeCash >= 6000) {
+        state.rankIndex = 3;
+      } else if (state.stats.artifactsFound >= 5 && state.stats.lifetimeCash >= 2000) {
+        state.rankIndex = 2;
+      } else if (state.stats.doubleLungs >= 3) {
+        state.rankIndex = 1;
+      } else {
+        state.rankIndex = 0;
+      }
+
+      const title = WOODSMAN_TITLES[state.rankIndex];
+      document.getElementById('rank-badge').textContent = title;
+      document.getElementById('ledger-rank-display').textContent = title;
+    }
+
+    function renderStats() {
+      document.getElementById('st-hunts').textContent = state.stats.hunts;
+      document.getElementById('st-doublelungs').textContent = state.stats.doubleLungs;
+      document.getElementById('st-deflections').textContent = state.stats.boneDeflections;
+      document.getElementById('st-record-score').textContent = `${state.stats.recordScore}" Gross`;
+      document.getElementById('st-artifacts-found').textContent = state.stats.artifactsFound;
+      document.getElementById('st-ivories').textContent = state.stats.ivories;
+      document.getElementById('st-arbitrage').textContent = `$${state.stats.arbitrageProfit}`;
+      document.getElementById('st-lifetime-cash').textContent = `$${state.stats.lifetimeCash}`;
+
+      for (let i = 1; i <= 4; i++) {
+        const step = document.getElementById('title-step-' + i);
+        if (step) {
+          if (i - 1 === state.rankIndex) {
+            step.className = 'p-2 rounded border border-amber-600 bg-[#2b1f13] font-bold text-amber-200';
+          } else if (i - 1 < state.rankIndex) {
+            step.className = 'p-2 rounded border border-emerald-900 bg-[#142116] text-emerald-300';
+          } else {
+            step.className = 'p-2 rounded border border-[#2b2016] opacity-50 text-zinc-400';
+          }
+        }
+      }
+    }
+
+    function resetWoodsmanLog() {
+      state.stats.hunts = 0;
+      state.stats.doubleLungs = 0;
+      state.stats.boneDeflections = 0;
+      state.stats.recordScore = 0;
+      state.stats.artifactsFound = 0;
+      state.stats.ivories = 0;
+      renderStats();
+      showToast('Chronicle Cleared', 'Logbook reset.');
+    }
+
+    /* --------------------------------------------------------------------------
+       15. RUT CYCLE (ADVANCE DAWN)
+       -------------------------------------------------------------------------- */
+    function advanceRutDay() {
+      state.day++;
+      document.getElementById('stat-season-day').textContent = `November Rut (Day ${state.day})`;
+
+      // Replenish encounters
+      if (state.encounters.length < 3) {
+        state.encounters.push(generateGameAnimal('Whitetail', 'Cruising 8-Point Rut Buck', 185, 134, Math.floor(Math.random() * 3) + 1));
+      }
+      if (state.encounters.length < 3) {
+        state.encounters.push(generateGameAnimal('Whitetail', 'Heavy 10-Point Droptine Buck', 220, 168, 2));
+      }
+      if (!state.selectedEncounterId && state.encounters.length > 0) {
+        state.selectedEncounterId = state.encounters[0].id;
+      }
+
+      state.bargainCountdown--;
+      if (state.bargainCountdown <= 0) {
+        state.bargainCountdown = 2;
+        populateRiverBargains();
+        showToast('Flatboat Arrived', 'Fresh uninspected dredge bundles landed at the trading post.');
+      }
+
+      showToast(`Dawn of Day ${state.day}`, 'Heavy frost coats the white oak canopy. Bucks on their feet.');
+      updateUI();
+      renderStats();
+    }
+
+    /* --------------------------------------------------------------------------
+       16. GREAT SPIRIT / GOD MODE CHEATS (NO AUDIO)
+       -------------------------------------------------------------------------- */
+    function cheatAddCash(amt) {
+      state.dollars += amt;
+      showToast('⚡ Great Spirit', `Bestowed +$${amt} frontier dollars.`);
+      updateUI();
+    }
+
+    function cheatAutoAimVitals() {
+      const p = updateBallisticPhysics();
+      const idealAngle = (10 + (p.horizontalYards * 0.72)).toFixed(1);
+      document.getElementById('slider-aim-angle').value = Math.round(idealAngle * 10);
+      updateBallisticPhysics();
+      drawTrajectoryCanvas('idle');
+      showToast('🎯 Perfect Hold-Under', `Downward aim calibrated to ${idealAngle}° for Lane ${state.selectedLane}.`);
+    }
+
+    function cheatUnlockAllBows() {
+      TRADITIONAL_BOWS.forEach(b => b.owned = true);
+      FIELD_GEAR.forEach(g => g.owned = true);
+    function scoutLocation(type) {
+      showToast('Scouting Horizon', 'Probing ancient gravel beds and exposed bluff cuts...');
+
+      let chance = 0.65;
+      if (hasUpgrade('g_screen')) chance = 0.90;
+
+      if (Math.random() <= chance) {
+        const unrecovered = AUTHENTIC_ARTIFACTS.filter(a => !state.discoveredArtifacts.some(d => d.id === a.id));
+        const art = unrecovered.length > 0 ? unrecovered[Math.floor(Math.random() * unrecovered.length)] : AUTHENTIC_ARTIFACTS[Math.floor(Math.random() * AUTHENTIC_ARTIFACTS.length)];
+
+        state.discoveredArtifacts.push(art);
+        state.stats.artifactsFound++;
+
+        state.vaultItems.unshift({
+          id: 'VAULT-ART-' + Date.now() + '-' + Math.floor(Math.random() * 999),
+          name: art.name,
+          category: 'Ancient Artifact',
+          period: art.period,
+          baseVal: art.trueVal,
+          quality: 'Flawless Prehistoric Lithic',
+          rarityTier: art.trueVal >= 1200 ? 3 : 2,
+          stars: art.trueVal >= 1200 ? '★★★' : '★★☆'
+        });
+
+        showToast('Artifact Unearthed!', `Discovered: ${art.name} (${art.period})! Appraised at $${art.trueVal}.`);
+      } else {
+        showToast('Nothing Uncovered', 'Only river chert nodules and crinoid fossil stems.');
+      }
+
+      renderArtifactsVault();
+      renderVaultItems();
+      renderStats();
+      updateUI();
+    }
+    function buyRiverBargain(id) {
+      const b = state.bargains.find(x => x.id === id);
+      if (!b) return;
+
+      if (state.dollars < b.price) {
+        showToast('Insufficient Cash', `You need $${b.price} frontier dollars.`);
+        return;
+      }
+
+      state.dollars -= b.price;
+
+      state.vaultItems.unshift({
+        id: 'VAULT-BARGAIN-' + Date.now() + '-' + Math.floor(Math.random() * 999),
+        name: b.title,
+        category: b.category,
+        baseVal: b.trueAppraisal,
+        purity: 95,
+        rarityTier: b.trueAppraisal >= 800 ? 3 : 2,
+        stars: b.trueAppraisal >= 800 ? '★★★' : '★★☆'
+      });
+
+      state.bargains = state.bargains.filter(x => x.id !== id);
+      showToast('Bundle Secured!', `Acquired for $${b.price} (Appraised at $${b.trueAppraisal}). Stashed in vault.`);
+
+      renderBargains();
+      renderVaultItems();
+      renderAuctionWall();
+      updateUI();
+    }
+
+    /* --------------------------------------------------------------------------
+       17. UI RENDERING & TAB CONTROLS
+       -------------------------------------------------------------------------- */
+    function updateUI() {
+      document.getElementById('stat-dollars').textContent = `$${state.dollars}`;
+
+      renderEncounterList();
+      renderActiveTargetBrief();
+      renderFieldDress();
+      renderAuctionWall();
+      renderBargains();
+      updateCareerRank();
+    }
+
+    function renderEncounterList() {
+      const container = document.getElementById('encounter-list');
+      document.getElementById('encounter-count').textContent = `${state.encounters.length} Active`;
+
+      if (state.encounters.length === 0) {
+        container.innerHTML = `<p class="text-xs text-[#705e4d] italic p-3">Draws quiet. Advance the hunt dawn for new cruisers.</p>`;
+        return;
+      }
+
+      container.innerHTML = state.encounters.map(e => {
+        const isSel = e.id === state.selectedEncounterId;
+        return `
+          <div onclick="selectEncounter('${e.id}')" class="p-2.5 rounded border cursor-pointer transition ${isSel ? 'border-[#d4a359] bg-[#271d14]' : 'border-[#2b2016] cabin-inset'}">
+            <div class="flex justify-between items-center text-xs mb-1">
+              <span class="font-title font-bold ${isSel ? 'text-amber-300' : 'text-amber-100'}">${e.name}</span>
+              <span class="text-yellow-300 font-bold">${e.bcScore}" B&C</span>
+            </div>
+            <p class="text-[11px] text-[#8a7b6a]">${e.species} • Lane ${e.lane} • ${e.weightLbs} lbs</p>
+            <p class="text-[10px] text-[#705e4d] truncate italic mt-1">${e.posture}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectEncounter(id) {
+      state.selectedEncounterId = id;
+      const target = getActiveTarget();
+      if (target) {
+        state.selectedLane = target.lane;
+        document.getElementById('slider-lane-window').value = target.lane;
+        const laneNames = { 1: 'Lane A (15 yds - Brush Gap)', 2: 'Lane B (22 yds - Main Scrape)', 3: 'Lane C (32 yds - Oak Ridge)' };
+        document.getElementById('val-lane-display').textContent = laneNames[target.lane];
+      }
+      renderEncounterList();
+      renderActiveTargetBrief();
+      updateBallisticPhysics();
+      drawTrajectoryCanvas('idle');
+    }
+
+    function renderActiveTargetBrief() {
+      const panel = document.getElementById('active-target-brief');
+      const t = getActiveTarget();
+      if (!t) {
+        panel.innerHTML = `<p class="text-xs text-[#705e4d] italic">No active game animal in your shooting lanes.</p>`;
+        return;
+      }
+
+      panel.innerHTML = `
+        <div class="flex flex-wrap justify-between items-start gap-2 mb-1.5">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h3 class="font-title font-bold text-sm sm:text-base text-amber-200">${t.name}</h3>
+              <span class="text-[9px] bg-[#2e1f13] text-amber-300 px-1 rounded border border-[#785b37]">${t.species}</span>
+            </div>
+            <p class="text-[11px] text-[#8a7b6a]">Cruising in Lane ${t.lane} • Posture: ${t.posture}</p>
+          </div>
+          <div class="text-right">
+            <span class="text-[11px] text-[#8a7b6a]">Gross Antler Score:</span>
+            <p class="text-xs sm:text-sm font-bold text-yellow-300">${t.bcScore}" Boone & Crockett</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-1.5 border-t border-[#2b2016] text-[11px]">
+          <div>
+            <span class="text-[#7b6b5a] block text-[9px]">Live Body Weight:</span>
+            <span class="text-amber-200 font-bold">${t.weightLbs} lbs</span>
+          </div>
+          <div>
+            <span class="text-[#7b6b5a] block text-[9px]">Shooting Lane:</span>
+            <span class="text-emerald-400 font-bold">Lane ${t.lane}</span>
+          </div>
+          <div>
+            <span class="text-[#7b6b5a] block text-[9px]">Temperament:</span>
+            <span class="text-sky-300">${t.alertLevel}</span>
+          </div>
+          <div>
+            <span class="text-[#7b6b5a] block text-[9px]">Ivory Teeth:</span>
+            <span class="${t.species === 'Wapiti Elk' || t.bcScore > 160 ? 'text-yellow-400 font-bold' : 'text-zinc-500'}">
+              ${t.species === 'Wapiti Elk' || t.bcScore > 160 ? 'Bull Ivories Present' : 'Standard Enamel'}
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    function switchTab(key) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('border-b-0', 'border-[#d4a359]', 'text-amber-300', 'font-bold');
+        btn.classList.add('border-b', 'border-[#3c3125]', 'text-[#8a7b6a]');
+      });
+
+      const v = document.getElementById('view-' + key);
+      const b = document.getElementById('tab-' + key);
+      if (v) v.classList.remove('hidden');
+      if (b) {
+        b.classList.add('border-b-0', 'border-[#d4a359]', 'text-amber-300', 'font-bold');
+        b.classList.remove('border-b', 'border-[#3c3125]', 'text-[#8a7b6a]');
+      }
+
+      if (key === 'treestand') drawTrajectoryCanvas('idle');
+      if (key === 'scouting') renderArtifactsVault();
+      if (key === 'fielddress') renderFieldDress();
+      if (key === 'auction') renderAuctionWall();
+      if (key === 'bargains') renderBargains();
+      if (key === 'bowyer') renderBowyerShop();
+      if (key === 'ledger') renderStats();
+    }
+
+    function toggleModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    let toastTimer = null;
+    function showToast(title, msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-msg').textContent = msg;
+
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 3000);
+    }
+
+    window.onload = function() {
+      initGame();
+      window.addEventListener('resize', () => drawTrajectoryCanvas('idle'));
+    };
+  </script>
+</body>
+</html>
